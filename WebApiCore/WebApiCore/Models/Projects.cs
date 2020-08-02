@@ -1,17 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApiCore.Models
 {
     public class ProjectsContext : DbContext
     {
-        public ProjectsContext(DbContextOptions<ProjectsContext> options) : base(options)
+        //public ProjectsContext(DbContextOptions<ProjectsContext> options) : base(options)
+        //{
+        //}
+
+        public ProjectsContext()
         {
         }
 
-        public DbSet<Projects> ProjectList { get; set; }
+        public DbSet<Projects> Projects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=postgres;Password=xxxx");
+            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=postgres;Password=mk1234");
     }
 
     public class Projects
@@ -19,12 +25,13 @@ namespace WebApiCore.Models
         public Projects()
         {
         }
-        public Projects(int projectId, string projectName)
-        {
-            ProjectId = projectId;
-            ProjectName = projectName;
-        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public int Size { get; set; }
+        public int Prio { get; set; }
+        public bool Active { get; set; }
     }
 }

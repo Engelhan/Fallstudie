@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MK\\source\\repos\\WebApiCore\\WebApiCore\\WebApiCore.csproj": {}
+    "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MK\\source\\repos\\WebApiCore\\WebApiCore\\WebApiCore.csproj": {
+    "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MK\\source\\repos\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
+        "projectUniqueName": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
         "projectName": "WebApiCore",
-        "projectPath": "C:\\Users\\MK\\source\\repos\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
+        "projectPath": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
         "packagesPath": "C:\\Users\\MK\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MK\\source\\repos\\WebApiCore\\WebApiCore\\obj\\",
+        "outputPath": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MK\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -38,6 +38,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[3.1.4, )"

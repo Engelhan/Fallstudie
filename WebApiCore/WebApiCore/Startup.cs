@@ -23,8 +23,7 @@ namespace WebApiCore
             services.AddCors();
             // Other DI initializations
             services.AddControllers();
-            services.AddDbContext<ProjectsContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("ProjectsContext")));
+            services.AddDbContext<ProjectsContext>(); //options => options.UseNpgsql(Configuration.GetConnectionString("ProjectsContext"))
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
