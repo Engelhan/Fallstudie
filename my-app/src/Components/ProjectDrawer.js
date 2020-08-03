@@ -14,17 +14,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import ProjectTable from "./ProjectTable";
+import DropZone from "./DropZone";
+import PlanningProjects from "./Planning";
 
 import NewIcon from '@material-ui/icons/FiberNew';
-import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
-import RestoreIcon from '@material-ui/icons/Restore';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import CloudUpload from '@material-ui/icons/CloudUpload';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import HelpIcon from '@material-ui/icons/Help';
+
 
 const drawerWidth = 240;
 
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
     },
 }));
 
@@ -94,6 +95,9 @@ export default function MiniDrawer() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [view, setView] = React.useState({
+        selectedView: 'MainTable'
+    });
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -103,30 +107,67 @@ export default function MiniDrawer() {
         setOpen(false);
     };
 
-    const switchM = (param) => {
-        switch(param) {
-            case 'Neu':
-                return <NewIcon />;
-            case 'Bewertet':
-                return <ThumbsUpDownIcon />;
-            case 'Zurückgestellt':
-                return <RestoreIcon />;
-            case 'Abgelehnt':
-                return <ThumbDownIcon />;
-            case 'Alle':
-                return <ListAltIcon />;
-            case 'Abgeschlossen':
-                return <CheckCircleOutlineIcon />;
-            case 'Mitarbeiter Übersicht':
-                return <RecentActorsIcon />;
+    const switchView = (param) => {
+        switch (param) {
+            case 'MainTable':
+                return <ProjectTable/>;
+            case 'Upload':
+                return <DropZone/>;
+            case 'Planning':
+                return <PlanningProjects/>;
             default:
-                return <HelpIcon />;
+                return <ProjectTable/>;
+        }
+    };
+
+    const switchSetView = (param) => {
+        switch (param) {
+            case 'Übersicht':
+                setView((prevState) => {
+                    prevState.selectedView = 'MainTable';
+                    return {...prevState, prevState};
+                });
+                break
+            case 'Upload':
+                setView((prevState) => {
+                    prevState.selectedView = 'Upload';
+                    return {...prevState, prevState};
+                });
+                break
+            case 'Planungsübersicht':
+                setView((prevState) => {
+                    prevState.selectedView = 'Planning';
+                    return {...prevState, prevState};
+                });
+                break
+            default:
+                setView((prevState) => {
+                    prevState.selectedView = 'MainTable';
+                    return {...prevState, prevState};
+                });
+        }
+    };
+
+    const switchM = (param) => {
+        switch (param) {
+            case 'Übersicht':
+                return <NewIcon/>;
+            case 'Upload':
+                return <CloudUpload/>;
+            case 'Planungsübersicht':
+                return <ListAltIcon/>;
+            case 'Abgeschlossen':
+                return <CheckCircleOutlineIcon/>;
+            case 'Mitarbeiter Übersicht':
+                return <RecentActorsIcon/>;
+            default:
+                return <HelpIcon/>;
         }
     };
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
+            <CssBaseline/>
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -143,10 +184,10 @@ export default function MiniDrawer() {
                             [classes.hide]: open,
                         })}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                       Projectmanager
+                        Projectmanager
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -165,30 +206,34 @@ export default function MiniDrawer() {
             >
                 <div className={classes.toolbar}>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                     </IconButton>
                 </div>
                 <List>
-                    {['Neu', 'Bewertet', 'Zurückgestellt', 'Abgelehnt'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['Übersicht', 'Upload'].map((text, index) => (
+                        <ListItem button key={text} onClick={() => {
+                            switchSetView(text)
+                        }}>
                             <ListItemIcon>{switchM(text)}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={text}/>
                         </ListItem>
                     ))}
                 </List>
-                <Divider />
+                <Divider/>
                 <List>
-                    {['Alle', 'Abgeschlossen', 'Mitarbeiter Übersicht'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['Planungsübersicht', 'Abgeschlossen', 'Mitarbeiter Übersicht'].map((text, index) => (
+                        <ListItem button key={text} onClick={() => {
+                            switchSetView(text)
+                        }}>
                             <ListItemIcon>{switchM(text)}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={text}/>
                         </ListItem>
                     ))}
                 </List>
             </Drawer>
             <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <ProjectTable/>
+                <div className={classes.toolbar}/>
+                {switchView(view.selectedView)}
             </main>
         </div>
     );
