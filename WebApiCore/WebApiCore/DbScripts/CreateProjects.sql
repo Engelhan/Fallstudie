@@ -6,9 +6,16 @@ CREATE TABLE "Projects"
 (
     "ProjectId" serial NOT NULL,
     "ProjectName" text COLLATE pg_catalog."default" NOT NULL,
-    "Size" integer,
-    "Prio" integer,
-    "Active" boolean,
+    "PlannedSales" integer,
+    "PlannedProfit" integer,
+    "EstimatedCosts" integer,
+    "StaffCosts" integer,
+    "StaffHours" integer,
+    "EmployeeNumber" integer,
+    "TimeExpenditure" integer,
+    "EndDate" date,
+    "CustomerPriority" integer,
+    "CustomerSales" integer,
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("ProjectId")
 )
 
