@@ -21,4 +21,25 @@ CREATE TABLE "Projects"
 
 TABLESPACE pg_default;
 
+CREATE TABLE "Roles"
+(
+    "RoleId" serial NOT NULL,
+    "RoleName" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Roles_pkey" PRIMARY KEY ("RoleId")
+)
+
+TABLESPACE pg_default;
+
+CREATE TABLE "Users"
+(
+    "UserId" serial NOT NULL,
+    "Firstname" text COLLATE pg_catalog."default" NOT NULL,
+    "Lastname" text COLLATE pg_catalog."default" NOT NULL,
+    "RoleId" integer,
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("UserId"),
+    CONSTRAINT "Role_fkey" FOREIGN KEY ("RoleId") REFERENCES Roles("RoleId")
+)
+
+TABLESPACE pg_default;
+
 ALTER TABLE public."Projects" OWNER to mk;
