@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,8 +31,15 @@ namespace WebApiCore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
-        public int Size { get; set; }
-        public int Prio { get; set; }
-        public bool Active { get; set; }
+        public int PlannedSales { get; set; }
+        public int PlannedProfit { get; set; }
+        public int EstimatedCosts { get; set; }
+        public int StaffCosts { get; set; }
+        public int StaffHours { get; set; }
+        public int EmployeeNumber { get; set; }
+        public int TimeExpenditure { get; set; }
+        public DateTime EndDate { get; set; }
+        public int CustomerPriority { get; set; }
+        public int CustomerSales { get; set; }
     }
 }
