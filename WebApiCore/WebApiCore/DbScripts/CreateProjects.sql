@@ -8,14 +8,18 @@ CREATE TABLE "Projects"
     "ProjectName" text COLLATE pg_catalog."default" NOT NULL,
     "PlannedSales" integer,
     "PlannedProfit" integer,
+    "CostSavings" integer,
+    "PaybackPeriod" integer;
     "EstimatedCosts" integer,
     "StaffCosts" integer,
     "StaffHours" integer,
     "EmployeeNumber" integer,
     "TimeExpenditure" integer,
     "EndDate" date,
-    "CustomerPriority" integer,
-    "CustomerSales" integer,
+    "EstimatedSalesCustomer" integer,
+    "CustomerPriority" integer, 
+    #zeitquotient wird berechnet und deshablb nicht in der datenbank geführt
+    "RiskExpectedValue" integer,
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("ProjectId")
 )
 
