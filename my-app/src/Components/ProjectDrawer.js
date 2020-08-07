@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,14 +18,13 @@ import {makeStyles, useTheme} from '@material-ui/core/styles';
 import ProjectTable from "./ProjectTable";
 import DropZone from "./DropZone";
 import PlanningProjects from "./Planning";
+import LoginForm from "./LoginForm";
 
 import NewIcon from '@material-ui/icons/FiberNew';
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
-
 
 const drawerWidth = 240;
 
@@ -94,9 +93,10 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer() {
     const classes = useStyles();
     const theme = useTheme();
+    const [loggedIn, setLoggedIn] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [view, setView] = React.useState({
-        selectedView: 'MainTable'
+        selectedView: 'Logout'
     });
 
     const handleDrawerOpen = () => {
@@ -107,7 +107,20 @@ export default function MiniDrawer() {
         setOpen(false);
     };
 
+    useEffect(() => {
+        if(loggedIn === true){
+            setView((prevState) => {
+                prevState.selectedView = 'MainTable';
+                return {...prevState, prevState};
+            });
+        }
+    }, [loggedIn]);
+
     const switchView = (param) => {
+        console.log("switchView " + loggedIn);
+        if (loggedIn === false) {
+            param = "Logout"
+        }
         switch (param) {
             case 'MainTable':
                 return <ProjectTable/>;
@@ -115,12 +128,17 @@ export default function MiniDrawer() {
                 return <DropZone/>;
             case 'Planning':
                 return <PlanningProjects/>;
+            case 'Logout':
+                return <LoginForm setLoggedIn={setLoggedIn}/>;
             default:
                 return <ProjectTable/>;
         }
     };
 
     const switchSetView = (param) => {
+        if (loggedIn === false) {
+            return;
+        }
         switch (param) {
             case 'Übersicht':
                 setView((prevState) => {
@@ -140,9 +158,15 @@ export default function MiniDrawer() {
                     return {...prevState, prevState};
                 });
                 break
+            case 'Logout':
+                setView((prevState) => {
+                    prevState.selectedView = 'Logout';
+                    return {...prevState, prevState};
+                });
+                break
             default:
                 setView((prevState) => {
-                    prevState.selectedView = 'MainTable';
+                    prevState.selectedView = 'Logout';
                     return {...prevState, prevState};
                 });
         }
@@ -156,10 +180,8 @@ export default function MiniDrawer() {
                 return <CloudUpload/>;
             case 'Planungsübersicht':
                 return <ListAltIcon/>;
-            case 'Abgeschlossen':
-                return <CheckCircleOutlineIcon/>;
-            case 'Mitarbeiter Übersicht':
-                return <RecentActorsIcon/>;
+            case 'Logout':
+                return <ExitToApp/>;
             default:
                 return <HelpIcon/>;
         }
@@ -221,9 +243,12 @@ export default function MiniDrawer() {
                 </List>
                 <Divider/>
                 <List>
-                    {['Planungsübersicht', 'Abgeschlossen', 'Mitarbeiter Übersicht'].map((text, index) => (
+                    {['Planungsübersicht', 'Logout'].map((text, index) => (
                         <ListItem button key={text} onClick={() => {
                             switchSetView(text)
+                            if(text === 'Logout'){
+                                setLoggedIn(false);
+                            }
                         }}>
                             <ListItemIcon>{switchM(text)}</ListItemIcon>
                             <ListItemText primary={text}/>

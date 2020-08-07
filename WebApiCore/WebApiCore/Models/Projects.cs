@@ -16,9 +16,11 @@ namespace WebApiCore.Models
         }
 
         public DbSet<Projects> Projects { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Roles> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=postgres;Password=1234");
+            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=mk;Password=mk1234");
     }
 
     public class Projects
