@@ -16,7 +16,7 @@ namespace WebApiCore.Models
         public DbSet<Roles> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=mk;Password=mk1234");
+            => optionsBuilder.UseNpgsql("Host=localhost;Database=projects;Username=postgres;Password=1234");
     }
 
     public class Projects
@@ -32,12 +32,22 @@ namespace WebApiCore.Models
         public int PlannedSales { get; set; }
         public int PlannedProfit { get; set; }
         public int EstimatedCosts { get; set; }
+        public int CostSavings { get; set; }
+        public int PaybackPeriod { get; set; }
+        public int Rentability { get; set; }
         public int StaffCosts { get; set; }
         public int StaffHours { get; set; }
         public int EmployeeNumber { get; set; }
+        public int EmployeeSales { get; set; }
+        public int AverageHourlyRate { get; set; }
+        public int ProfitPerHour { get; set; }
         public int TimeExpenditure { get; set; }
         public DateTime EndDate { get; set; }
         public int CustomerPriority { get; set; }
-        public int CustomerSales { get; set; }
+        public int TimeBuffer { get; set; }
+        public int RiskExpectedValue { get; set; }
+        public int Ranking { get; set; }
+
     }
 }
+

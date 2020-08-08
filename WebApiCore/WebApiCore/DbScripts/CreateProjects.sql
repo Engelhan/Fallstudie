@@ -8,18 +8,22 @@ CREATE TABLE "Projects"
     "ProjectName" text COLLATE pg_catalog."default" NOT NULL,
     "PlannedSales" integer,
     "PlannedProfit" integer,
-    "CostSavings" integer,
-    "PaybackPeriod" integer;
     "EstimatedCosts" integer,
+    "CostSavings" integer,
+    "PaybackPeriod" integer,
+    "Rentability" integer,
     "StaffCosts" integer,
     "StaffHours" integer,
     "EmployeeNumber" integer,
+    "EmployeeSales" integer,
+    "AverageHourlyRate" integer,
+    "ProfitPerHour" integer,
     "TimeExpenditure" integer,
     "EndDate" date,
-    "EstimatedSalesCustomer" integer,
-    "CustomerPriority" integer, 
-    #zeitquotient wird berechnet und deshablb nicht in der datenbank geführt
+    "CustomerPriority" integer,
+    "TimeBuffer" integer, 
     "RiskExpectedValue" integer,
+    "Ranking" integer,
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("ProjectId")
 )
 
@@ -39,6 +43,8 @@ CREATE TABLE "Users"
     "UserId" serial NOT NULL,
     "Firstname" text COLLATE pg_catalog."default" NOT NULL,
     "Lastname" text COLLATE pg_catalog."default" NOT NULL,
+    "Username" text COLLATE pg_catalog."default" NOT NULL,
+    "Password" text COLLATE pg_catalog."default" NOT NULL,
     "RoleId" integer,
     CONSTRAINT "Users_pkey" PRIMARY KEY ("UserId"),
     CONSTRAINT "Role_fkey" FOREIGN KEY ("RoleId") REFERENCES Roles("RoleId")
