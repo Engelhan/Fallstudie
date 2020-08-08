@@ -92,7 +92,7 @@ namespace WebApiCore.Controllers
         public IActionResult login(Users user)
         {
             var successful = false;
-            Users foundUser = null;
+            Users foundUser = user;
             Roles role = null;
             var error = "";
             using (var context = new ProjectsContext())
@@ -105,6 +105,7 @@ namespace WebApiCore.Controllers
                 //    if(roles.Count() == 1)
                 //    {
                 //        role = roles.First();
+                        successful = true;
                 //    }
                 //    else
                 //    {

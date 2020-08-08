@@ -8,6 +8,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Check from "@material-ui/icons/Check";
 import Clear from "@material-ui/icons/Clear";
+import {Grid, TextField} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     buttonGreen: {
@@ -61,27 +62,53 @@ function LinearProgressWithLabel(props) {
     );
 }
 
-// Todo: Button und Dropzone funktion für upload
 export default function PlanningProjects() {
     const classes = useStyles();
-    const [progress, setProgress] = React.useState(10);
+    const min = 0;
+    const [progress, setProgress] = React.useState(0);
+    const [maxScore, setMaxScore] = React.useState();
+    const [scoreFilled, setScoreFilled] = React.useState(false);
 
-    React.useEffect(() => {
-        const timer = setInterval(() => {
-            setProgress((prevProgress) => (prevProgress >= 150 ? 10 : prevProgress + 10));
-        }, 1800);
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
+    //MIN = Minimum expected value
+    //MAX = Maximium expected value
+    //Function to normalise the values (MIN / MAX could be integrated)
+    const normalise = value => (value - min) * 100 / (maxScore - min);
+
+    const setProgressbarNormalised = (val) => {
+        var res = progress + normalise(val);
+        setProgress(() => (res));
+        console.log(progress);
+    }
+
+    useEffect(() => {
+        if (maxScore === 0) {
+            setScoreFilled(false);
+        } else if (maxScore) {
+            setScoreFilled(true);
+        } else {
+            setScoreFilled(false);
+        }
+    }, [maxScore]);
 
     return (
         <div className={classes.root}>
             <h1>Ressourcenplanung</h1>
+            <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="background.paper">
+                <TextField fullWidth variant={'outlined'} value={maxScore} onChange={(event) => {
+                    var result = event.target.value;
+                    if (result <= 0) {
+                        result = 0;
+                    }
+                    setMaxScore(result);
+                    setProgress(() => (0));
+                }} id="maxScore" label="Maximaler Score" type="number" autoFocus required/>
+            </Box>
+            <TransferProjects scoreFilled={scoreFilled} key={maxScore} reset={() => {
+                setProgress(() => (0));
+            }} setProgressbarNormalised={setProgressbarNormalised}/>
             <LinearProgressWithLabel value={progress}
-                                     classes={progress <= 100 ? { barColorPrimary: classes.barRootGreen, } : { barColorPrimary: classes.barRootRed, }}
-                                     className={progress <= 100 ? classes.barGreen : classes.barRed} />
-            <TransferProjects/>
+                                     classes={progress <= 100 ? {barColorPrimary: classes.barRootGreen,} : {barColorPrimary: classes.barRootRed,}}
+                                     className={progress <= 100 ? classes.barGreen : classes.barRed}/>
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
                 <Button startIcon={progress <= 100 ? <Check/> : <Clear/>}

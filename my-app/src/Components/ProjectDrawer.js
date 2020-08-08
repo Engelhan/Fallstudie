@@ -25,6 +25,7 @@ import CloudUpload from '@material-ui/icons/CloudUpload';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
+import AccountBox from '@material-ui/icons/AccountBox';
 
 const drawerWidth = 240;
 
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: 36,
+    }, title: {
+        flexGrow: 1,
     },
     hide: {
         display: 'none',
@@ -93,6 +96,8 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer() {
     const classes = useStyles();
     const theme = useTheme();
+    const [user, setUser] = React.useState("");
+    const [role, setRole] = React.useState("Admin");
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [view, setView] = React.useState({
@@ -108,7 +113,7 @@ export default function MiniDrawer() {
     };
 
     useEffect(() => {
-        if(loggedIn === true){
+        if (loggedIn === true) {
             setView((prevState) => {
                 prevState.selectedView = 'MainTable';
                 return {...prevState, prevState};
@@ -129,7 +134,7 @@ export default function MiniDrawer() {
             case 'Planning':
                 return <PlanningProjects/>;
             case 'Logout':
-                return <LoginForm setLoggedIn={setLoggedIn}/>;
+                return <LoginForm setLoggedIn={setLoggedIn} setUser={setUser}/>;
             default:
                 return <ProjectTable/>;
         }
@@ -172,7 +177,36 @@ export default function MiniDrawer() {
         }
     };
 
-    const switchM = (param) => {
+    const switchRoles = (top) => {
+        switch (role) {
+            case 'Admin':
+                if (top === true) {
+                    return ['Übersicht', 'Upload'];
+                } else {
+                    return ['Planungsübersicht', 'Logout'];
+                }
+            case 'ProjectManager':
+                if (top === true) {
+                    return ['Übersicht'];
+                } else {
+                    return ['Planungsübersicht', 'Logout'];
+                }
+            case 'Controlling':
+                if (top === true) {
+                    return ['Übersicht'];
+                } else {
+                    return ['Logout'];
+                }
+            default:
+                if (top === true) {
+                    return [];
+                } else {
+                    return ['Logout'];
+                }
+        }
+    };
+
+    const switchIcons = (param) => {
         switch (param) {
             case 'Übersicht':
                 return <NewIcon/>;
@@ -185,6 +219,17 @@ export default function MiniDrawer() {
             default:
                 return <HelpIcon/>;
         }
+    };
+
+    const displayLoggedInUser = () => {
+        return (
+            <IconButton color="inherit">
+                <AccountBox/>
+                <Typography variant="caption" className={classes.title} noWrap>
+                    {user.username + ", " + role}
+                </Typography>
+            </IconButton>
+        )
     };
 
     return (
@@ -208,9 +253,10 @@ export default function MiniDrawer() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h6" className={classes.title} noWrap>
                         Projectmanager
                     </Typography>
+                    { loggedIn === true ? displayLoggedInUser() :<div/> }
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -232,25 +278,25 @@ export default function MiniDrawer() {
                     </IconButton>
                 </div>
                 <List>
-                    {['Übersicht', 'Upload'].map((text, index) => (
-                        <ListItem button key={text} onClick={() => {
-                            switchSetView(text)
-                        }}>
-                            <ListItemIcon>{switchM(text)}</ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItem>
+                    {switchRoles(true).map((text, index) => (
+                    <ListItem button key={text} onClick={() => {
+                        switchSetView(text)
+                    }}>
+                        <ListItemIcon>{switchIcons(text)}</ListItemIcon>
+                        <ListItemText primary={text}/>
+                    </ListItem>
                     ))}
                 </List>
                 <Divider/>
                 <List>
-                    {['Planungsübersicht', 'Logout'].map((text, index) => (
+                    {switchRoles(false).map((text, index) => (
                         <ListItem button key={text} onClick={() => {
                             switchSetView(text)
-                            if(text === 'Logout'){
+                            if (text === 'Logout') {
                                 setLoggedIn(false);
                             }
                         }}>
-                            <ListItemIcon>{switchM(text)}</ListItemIcon>
+                            <ListItemIcon>{switchIcons(text)}</ListItemIcon>
                             <ListItemText primary={text}/>
                         </ListItem>
                     ))}

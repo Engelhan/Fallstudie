@@ -24,7 +24,8 @@ export default function ProjectTable() {
     const [open, setOpen] = React.useState(false);
     const [state, setState] = React.useState({
         columns: [
-            {title: 'Projekt Name', field: 'projectName'},
+            {title: 'Project Name', field: 'projectName'},
+            {title: 'Score', defaultSort: "desc", field: 'customerSales', type: 'numeric', editable:'never'},
             {title: 'Planned Sales', field: 'plannedSales'},
             {title: 'Planned Profit', field: 'plannedProfit'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
@@ -35,7 +36,6 @@ export default function ProjectTable() {
             {title: 'End Date', field: 'endDate', type: 'date'},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric'},
             {title: 'Customer Sales', field: 'customerSales', type: 'numeric'},
-            {title: 'Score',  field: 'customerSales', type: 'numeric', editable:'never'},
             // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
         ],
         data: []
@@ -119,6 +119,23 @@ export default function ProjectTable() {
         }, 0);
     };
 
+    const convertForUpdate = (newData) => {
+        return {
+            projectId: newData.projectId,
+            projectName: newData.projectName,
+            plannedSales: parseInt(newData.plannedSales),
+            plannedProfit: parseInt(newData.plannedProfit),
+            estimatedCosts: parseInt(newData.estimatedCosts),
+            staffCosts: parseInt(newData.staffCosts),
+            staffHours: parseInt(newData.staffHours),
+            employeeNumber: parseInt(newData.employeeNumber),
+            timeExpenditure: parseInt(newData.timeExpenditure),
+            endDate: newData.endDate,
+            customerPriority: parseInt(newData.customerPriority),
+            customerSales: parseInt(newData.customerSales)
+        };
+    }
+
     return (<div>
             <MaterialTable
                 title="Projects"
@@ -132,8 +149,9 @@ export default function ProjectTable() {
                                 if (oldData) {
                                     setState((prevState) => {
                                         const data = [...prevState.data];
-                                        data[data.indexOf(oldData)] = newData;
-                                        UpdateProject(newData)
+                                        var convertedData =  convertForUpdate(newData)
+                                        data[data.indexOf(oldData)] = convertedData;
+                                        UpdateProject(convertedData)
                                         return {...prevState, data};
                                     });
                                 }
