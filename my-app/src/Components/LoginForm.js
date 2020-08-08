@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginTab(props) {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [errorLogin, setErrorLogin] = React.useState(false);
+    const [errorLoginText, setErrorLoginText] = React.useState(false);
     const classes = useStyles();
 
     const handleClickLogin = () => {
@@ -25,7 +27,14 @@ export default function LoginTab(props) {
             {username: username, password: password}
         ).then((result) => {
             console.log(result);
-            props.setLoggedIn(true);
+            if (result.data.successful === true) {
+                setErrorLogin(!result.data.successful);
+                props.setUser(result.data.foundUser);
+                props.setLoggedIn(result.data.successful);
+            } else {
+                setErrorLoginText(result.data.error);
+                setErrorLogin(!result.data.successful);
+            }
         }).catch((error) => {
             console.log(error);
         });
@@ -39,7 +48,8 @@ export default function LoginTab(props) {
                         <AccountBox/>
                     </Grid>
                     <Grid item md={true} sm={true} xs={true}>
-                        <TextField value={username} onChange={(event) => {
+                        <TextField helperText={errorLogin === true ? errorLoginText : ""} error={errorLogin}
+                                   value={username} onChange={(event) => {
                             setUsername(event.target.value);
                         }} id="username" label="Username" type="email" fullWidth autoFocus required/>
                     </Grid>
@@ -49,7 +59,8 @@ export default function LoginTab(props) {
                         <Lock/>
                     </Grid>
                     <Grid item md={true} sm={true} xs={true}>
-                        <TextField value={password} onChange={(event) => {
+                        <TextField helperText={errorLogin === true ? errorLoginText : ""} error={errorLogin}
+                                   value={password} onChange={(event) => {
                             setPassword(event.target.value);
                         }} id="password" label="Password" type="password" fullWidth required/>
                     </Grid>
