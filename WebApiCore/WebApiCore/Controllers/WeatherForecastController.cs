@@ -97,25 +97,25 @@ namespace WebApiCore.Controllers
             var error = "";
             using (var context = new ProjectsContext())
             {
-                //var users = context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).ToList();
-                //if(users.Count() == 1)
-                //{
-                //    foundUser = users.First();
-                //    var roles = context.Roles.Where(r => r.RoleId == foundUser.RoleId).ToList();
-                //    if(roles.Count() == 1)
-                //    {
-                //        role = roles.First();
+                var users = context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).ToList();
+                if (users.Count() == 1)
+                {
+                    foundUser = users.First();
+                    var roles = context.Roles.Where(r => r.RoleId == foundUser.RoleId).ToList();
+                    if (roles.Count() == 1)
+                    {
+                        role = roles.First();
                         successful = true;
-                //    }
-                //    else
-                //    {
-                //        error = "Keine Role für den Benutzer gefunden!";
-                //    }               
-                //}
-                //else
-                //{
-                //    error = "Password oder Username Falsch!";
-                //}                
+                    }
+                    else
+                    {
+                        error = "Keine Role für den Benutzer gefunden!";
+                    }
+                }
+                else
+                {
+                    error = "Password oder Username Falsch!";
+                }
             }
 
             return Ok(new { successful, foundUser, role, error });
