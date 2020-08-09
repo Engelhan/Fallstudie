@@ -974,19 +974,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Niklas\\.nuget\\packages\\": {}
+    "C:\\Users\\MK\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Niklas\\Documents\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
+      "projectUniqueName": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
       "projectName": "WebApiCore",
-      "projectPath": "C:\\Users\\Niklas\\Documents\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
-      "packagesPath": "C:\\Users\\Niklas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Niklas\\Documents\\Fallstudie\\WebApiCore\\WebApiCore\\obj\\",
+      "projectPath": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\WebApiCore.csproj",
+      "packagesPath": "C:\\Users\\MK\\.nuget\\packages\\",
+      "outputPath": "D:\\Projekte\\Fallstudie\\WebApiCore\\WebApiCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Niklas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MK\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1041,7 +1041,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
