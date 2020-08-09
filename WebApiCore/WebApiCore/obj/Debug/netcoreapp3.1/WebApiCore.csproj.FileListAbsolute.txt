@@ -122,6 +122,7 @@ C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csproj.CopyComplete
+C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Schema.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csproj.CoreCompileInputs.cache
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csproj.CopyComplete

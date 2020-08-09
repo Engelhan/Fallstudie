@@ -45,7 +45,7 @@ export default function DropZone() {
         var formData = new FormData();
         formData.append('file', fileData.files[0]);
 
-        axios.post('https://localhost:5001/weatherforecast/uploadProjects', formData, {
+        axios.post('https://localhost:5001/project/uploadProjects', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

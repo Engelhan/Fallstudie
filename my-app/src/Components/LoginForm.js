@@ -23,7 +23,7 @@ export default function LoginTab(props) {
     const classes = useStyles();
 
     const handleClickLogin = () => {
-        axios.post("https://localhost:5001/weatherforecast/login",
+        axios.post("https://localhost:5001/project/login",
             {username: username, password: password}
         ).then((result) => {
             console.log(result);
