@@ -107,7 +107,7 @@ export default function TransferProjects(props) {
 
     const LoadProjects = () => {
         var resultData = [];
-        axios.get("https://localhost:5001/weatherforecast/getProjects"
+        axios.get("https://localhost:5001/project/getProjects"
         ).then((result) => {
             var res = [];
             console.log(result);
