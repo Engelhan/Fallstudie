@@ -59,7 +59,7 @@ export default function ProjectTable() {
 
     const LoadProjects = () => {
         var resultData = [];
-        axios.get("https://localhost:5001/weatherforecast/getProjects"
+        axios.get("https://localhost:5001/project/getProjects"
         ).then((result) => {
             console.log(result.data);
             setTimeout(() => {
@@ -81,7 +81,7 @@ export default function ProjectTable() {
 
     const UpdateProject = (newData) => {
         console.log(newData);
-        axios.post("https://localhost:5001/weatherforecast/updateProjects",
+        axios.post("https://localhost:5001/project/updateProjects",
             getDataProject(newData)
         ).then((result) => {
             console.log(result);
@@ -92,7 +92,7 @@ export default function ProjectTable() {
 
     const AddNewProject = (newData) => {
         console.log(newData);
-        axios.post("https://localhost:5001/weatherforecast/addProjects",
+        axios.post("https://localhost:5001/project/addProjects",
             getDataProject(newData)
         ).then((result) => {
             console.log(result);
@@ -103,7 +103,7 @@ export default function ProjectTable() {
 
     const DeleteProject = (dataToDelete) => {
         console.log(dataToDelete);
-        axios.post("https://localhost:5001/weatherforecast/deleteProjects",
+        axios.post("https://localhost:5001/project/deleteProjects",
             getDataProject(dataToDelete)
         ).then((result) => {
             console.log(result);

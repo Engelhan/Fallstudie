@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,38 +8,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using WebApiCore.Models;
 
 namespace WebApiCore.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ProjectController : ControllerBase
     {
-        //private static readonly string[] Summaries = new[]
-        //{
-        //    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        //};
+        private readonly ILogger<ProjectController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ProjectController(ILogger<ProjectController> logger)
         {
             _logger = logger;
         }
-
-        //[HttpGet]
-        //public IEnumerable<WeatherForecast> Get()
-        //{
-        //    var rng = new Random();
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateTime.Now.AddDays(index),
-        //        TemperatureC = rng.Next(-20, 55),
-        //        Summary = Summaries[rng.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
 
         [HttpPost("deleteProjects/")]
         public IEnumerable<Projects> DeleteProject(Projects projects)
@@ -126,7 +111,42 @@ namespace WebApiCore.Controllers
         {
             long size = file.Length;
             var projectCount = 0;
-            var error = "";
+            IList<ValidationError> errors;
+            var jsonSchema = @"{
+                                'description': '´projects',
+                                'type': 'array',
+                                'items': {
+                                    'type': 'object',
+                                    'properties':{
+                                        'projectId':{'type':'number'},
+                                        'projectName':{'type':'string'},
+                                        'plannedSales':{'type':'number'},
+                                        'plannedProfit':{'type':'number'},
+                                        'estimatedCosts':{'type':'number'},
+                                        'staffCosts':{'type':'number'},
+                                        'staffHours':{'type':'number'},
+                                        'employeeNumber':{'type':'number'},
+                                        'timeExpenditure':{'type':'number'},
+                                        'endDate':{'type':'string'},
+                                        'customerPriority':{'type':'number'}
+                                    },
+                                    'additionalProperties':false,
+                                    'required':[
+                                                'projectId',
+                                                'projectName',
+                                                'plannedSales',
+                                                'plannedProfit',
+                                                'estimatedCosts',
+                                                'staffCosts',
+                                                'staffHours',
+                                                'employeeNumber',
+                                                'timeExpenditure',
+                                                'endDate',
+                                                'customerPriority'
+                                               ],
+                                },
+                              }";
+            var schema = JSchema.Parse(jsonSchema);
             //todo prüfen ob gültige datei
             var result = new StringBuilder();
             using (var reader = new StreamReader(file.OpenReadStream()))
@@ -136,29 +156,30 @@ namespace WebApiCore.Controllers
                     result.AppendLine(await reader.ReadLineAsync());
                 }
             }
-            
-            //if (file.Length > 0)
-            //{
-            //    var filePath = Path.GetTempFileName();
-
-            //    using (var stream = System.IO.File.Create(filePath))
-            //    {
-            //        await file.CopyToAsync(stream);
-            //    }
-            //}
-
-            try
+            JArray jprojects = JArray.Parse(result.ToString());
+            var valid = jprojects.IsValid(schema, out errors);
+            if (valid)
             {
-                //todo: Upload mit richtiger Json datei testen
-                var myJsonObject = JsonConvert.DeserializeObject<List<Projects>>(result.ToString());
-                //todo: add or Update to database
+                var projectsList = jprojects.ToObject<List<Projects>>();
+                foreach (var project in projectsList)
+                {
+                    using (var context = new ProjectsContext())
+                    {
+                        context.Update(project);
+                        context.SaveChanges();
+                    }
+                    projectCount++;
+                }
+                return Ok(new { projectCount, size });
             }
-            catch (System.Exception e)
+            else
             {
-                return Ok(new { projectCount, size, error = "Fehler beim Deserializieren der Json Datei. Ungültige Datei." });
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ToString());
+                }
+                return BadRequest(new { projectCount, size, errors });
             }
-            
-            return Ok(new { projectCount, size, error });
         }
     }
 

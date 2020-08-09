@@ -1,0 +1,15 @@
+﻿[
+    {
+        "projectId": 1,
+        "projectName": "new jsontest",
+        "plannedSales": 0,
+        "plannedProfit": 0,
+        "estimatedCosts": 0,
+        "staffCosts": 0,
+        "staffHours": 0,
+        "employeeNumber": 0,
+        "timeExpenditure": 0,
+        "endDate": "2020-08-08T21:59:58.379Z",
+        "customerPriority": 0
+    }
+]
