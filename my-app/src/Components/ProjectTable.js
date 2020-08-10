@@ -39,7 +39,7 @@ export default function ProjectTable() {
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable:'never'},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable:'never'},
             {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable:'never'},
-            {title: 'Average Hourly Rate', field: 'employeeSales', type: 'numeric', editable:'never'},
+            {title: 'Average Hourly Rate', field: 'AverageHourlyRate', type: 'numeric', editable:'never'},
             {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable:'never'},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable:'never'},
             {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable:'never'},
@@ -79,27 +79,33 @@ export default function ProjectTable() {
         LoadProjects();
     }, []);
 
-    const UpdateProject = (newData) => {
+    const UpdateProject = (newData) => new Promise((resolve) => {
         console.log(newData);
         axios.post("https://localhost:5001/project/updateProjects",
             getDataProject(newData)
         ).then((result) => {
             console.log(result);
+            newData = result.data[0];
+            resolve(newData);
         }).catch((error) => {
             console.log(error);
+            resolve(false);
         });
-    };
+    });
 
-    const AddNewProject = (newData) => {
+    const AddNewProject = async (newData) => new Promise((resolve) => {
         console.log(newData);
         axios.post("https://localhost:5001/project/addProjects",
             getDataProject(newData)
         ).then((result) => {
-            console.log(result);
+            console.log(result.data[0]);
+            newData = result.data[0];
+            resolve(newData);
         }).catch((error) => {
             console.log(error);
+            resolve(false);
         });
-    };
+    });
 
     const DeleteProject = (dataToDelete) => {
         console.log(dataToDelete);
@@ -118,12 +124,14 @@ export default function ProjectTable() {
 
     const addProject = (newData) => {
         setTimeout(() => {
-            setState((prevState) => {
-                const data = [...prevState.data];
-                data.push(newData);
-                AddNewProject(newData)
-                return {...prevState, data};
-            });
+            AddNewProject(newData).then((result) => {
+                console.log(result);
+                setState((prevState) => {
+                    const data = [...prevState.data];
+                    data.push(result);
+                    return {...prevState, data};
+                });
+            })
         }, 0);
     };
 
@@ -139,7 +147,16 @@ export default function ProjectTable() {
             employeeNumber: parseInt(newData.employeeNumber),
             timeExpenditure: parseInt(newData.timeExpenditure),
             endDate: newData.endDate,
-            riskExpectedValue: parseInt(newData.riskExpectedValue)
+            riskExpectedValue: parseInt(newData.riskExpectedValue),
+            plannedProfit: parseInt(newData.plannedProfit),
+            paybackPeriod: parseInt(newData.paybackPeriod),
+            rentability: parseInt(newData.rentability),
+            employeeSales: parseInt(newData.employeeSales),
+            averageHourlyRate: parseInt(newData.averageHourlyRate),
+            profitPerHour: parseInt(newData.profitPerHour),
+            customerPriority: parseInt(newData.customerPriority),
+            timeBuffer: parseInt(newData.timeBuffer),
+            ranking: parseInt(newData.ranking)
         };
     }
 
@@ -156,15 +173,16 @@ export default function ProjectTable() {
                             setTimeout(() => {
                                 resolve();
                                 if (oldData) {
-                                    setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        var convertedData =  convertForUpdate(newData)
-                                        UpdateProject(convertedData)
-                                        data[data.indexOf(oldData)] = convertedData; // todo: use object from UpdateProject
-                                        return {...prevState, data};
+                                    var convertedData =  convertForUpdate(newData)
+                                    UpdateProject(convertedData).then((result) => {
+                                        setState((prevState) => {
+                                            const data = [...prevState.data];
+                                            data[data.indexOf(oldData)] = result;
+                                            return {...prevState, data};
+                                        });
                                     });
                                 }
-                            }, 600);
+                            }, 0);
                         }),
                     onRowDelete: (oldData) =>
                         new Promise((resolve) => {
@@ -176,7 +194,7 @@ export default function ProjectTable() {
                                     DeleteProject(oldData);
                                     return {...prevState, data};
                                 });
-                            }, 600);
+                            }, 0);
                         }),
                 }}
             />

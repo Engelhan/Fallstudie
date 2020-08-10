@@ -30,6 +30,7 @@ export default function LoginTab(props) {
             if (result.data.successful === true) {
                 setErrorLogin(!result.data.successful);
                 props.setUser(result.data.foundUser);
+                props.setRole(result.data.role.roleName);
                 props.setLoggedIn(result.data.successful);
             } else {
                 setErrorLoginText(result.data.error);

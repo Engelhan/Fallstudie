@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import {DropzoneArea} from 'material-ui-dropzone'
 import axios from "axios";
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -14,16 +15,24 @@ const useStyles = makeStyles((theme) => ({
     buttonGroup: {
         width: '100%',
         justifyContent: 'center'
+    },
+    root: {
+        background: '#8b0000'
     }
 }));
 
-// Todo: Button und Dropzone funktion für upload
 export default function DropZone() {
     const classes = useStyles();
     const [key, setKey] = useState(0);
     const [fileData, setFileData] = React.useState({
         files: null
     });
+    const [state, setState] = React.useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center'
+    });
+    const { vertical, horizontal, open } = state;
 
     const reset = () => {
         setFileData({ files: []});
@@ -56,8 +65,16 @@ export default function DropZone() {
             reset();
             console.log(fileData.files)
         }).catch((error) => {
-            console.log(error);
+            if(error.response.data){
+                console.log(error.response.data);
+                var newState = { vertical: 'bottom', horizontal: 'center'};
+                setState({ open: true, ...newState });
+            }
         });
+    };
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
     };
 
     return (<div >
@@ -73,6 +90,15 @@ export default function DropZone() {
                          color="inherit">
                 <Button onClick={uploadFiles} startIcon={<CloudUpload/>} className={classes.button}>Upload</Button>
             </ButtonGroup>
+            <Snackbar ContentProps={{ classes: { root: classes.root }}}
+                anchorOrigin={{ vertical, horizontal }}
+                autoHideDuration={6000}
+                open={open}
+                onClose={handleClose}
+                message="Fehler beim Upload"
+                key={vertical + horizontal}
+            >
+            </Snackbar>
         </div>
     );
 }

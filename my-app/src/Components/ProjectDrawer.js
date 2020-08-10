@@ -134,7 +134,7 @@ export default function MiniDrawer() {
             case 'Planning':
                 return <PlanningProjects/>;
             case 'Logout':
-                return <LoginForm setLoggedIn={setLoggedIn} setUser={setUser}/>;
+                return <LoginForm setRole={setRole} setLoggedIn={setLoggedIn} setUser={setUser}/>;
             default:
                 return <ProjectTable/>;
         }
