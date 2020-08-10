@@ -5,10 +5,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>WebApiCore</ActiveDebugProfile>
+    <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
-  <ItemGroup>
-    <TypeScriptCompile Update="JSON Example\example.json">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-  </ItemGroup>
 </Project>

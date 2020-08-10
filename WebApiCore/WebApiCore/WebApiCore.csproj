@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="JSON Example\example.json" />
+    <Folder Include="JSON Example\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties json_x0020_example_4example_1json__JsonSchema="[{&quot;projectId&quot;:1,&quot;projectName&quot;:&quot;new jsontest&quot;,&quot;plannedSales&quot;:0,&quot;plannedProfit&quot;:0,&quot;estimatedCosts&quot;:0,&quot;staffCosts&quot;:0,&quot;staffHours&quot;:0,&quot;employeeNumber&quot;:0,&quot;timeExpenditure&quot;:0,&quot;endDate&quot;:&quot;2020-08-08T21:59:58.379Z&quot;,&quot;customerPriority&quot;:0}]" /></VisualStudio></ProjectExtensions>

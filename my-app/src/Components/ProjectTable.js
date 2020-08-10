@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
     buttonGroup: {
         width: '100%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-start'
     }
 }));
 
@@ -25,28 +25,28 @@ export default function ProjectTable() {
     const [state, setState] = React.useState({
         columns: [
             {title: 'Project Name', field: 'projectName'},
-            {title: 'Score', defaultSort: "desc", field: 'customerSales', type: 'numeric', editable:'never'},
-            {title: 'Planned Sales', field: 'plannedSales'},
-            {title: 'Planned Profit', field: 'plannedProfit'},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never'},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
-            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric'},
-            {title: 'Rentability', field: 'rentability', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
             {title: 'Staff Hours', field: 'staffHours', type: 'numeric'},
             {title: 'Employee Number', field: 'employeeNumber', type: 'numeric'},
-            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric'},
-            {title: 'Average Hourly Rate', field: 'employeeSales', type: 'numeric'},
-            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric'},
             {title: 'Time Expenditure', field: 'timeExpenditure', type: 'numeric'},
             {title: 'End Date', field: 'endDate', type: 'date'},
-            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric'},
-            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric'},
             {title: 'Risk Expected Value', field: 'riskExpectedValue', type: 'numeric'},
-            {title: 'Ranking', field: 'ranking', type: 'numeric'},
+            {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable:'never'},
+            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable:'never'},
+            {title: 'Rentability', field: 'rentability', type: 'numeric', editable:'never'},
+            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable:'never'},
+            {title: 'Average Hourly Rate', field: 'employeeSales', type: 'numeric', editable:'never'},
+            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable:'never'},
+            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable:'never'},
+            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable:'never'},
             // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
         ],
-        data: []
+        data: [],
+        options: {pageSizeOptions: [8, 12, 20,], pageSize: 8 }
     });
 
     const handleClickOpen = () => {
@@ -132,23 +132,24 @@ export default function ProjectTable() {
             projectId: newData.projectId,
             projectName: newData.projectName,
             plannedSales: parseInt(newData.plannedSales),
-            plannedProfit: parseInt(newData.plannedProfit),
             estimatedCosts: parseInt(newData.estimatedCosts),
+            costSavings: parseInt(newData.costSavings),
             staffCosts: parseInt(newData.staffCosts),
             staffHours: parseInt(newData.staffHours),
             employeeNumber: parseInt(newData.employeeNumber),
             timeExpenditure: parseInt(newData.timeExpenditure),
             endDate: newData.endDate,
-            customerPriority: parseInt(newData.customerPriority),
-            customerSales: parseInt(newData.customerSales)
+            riskExpectedValue: parseInt(newData.riskExpectedValue)
         };
     }
 
     return (<div>
             <MaterialTable
-                title="Projects"
+                title="Projekts"
                 columns={state.columns}
                 data={state.data}
+                options={state.options}
+                pageSizeOptions={[10,15,20]}
                 editable={{
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve) => {
@@ -158,8 +159,8 @@ export default function ProjectTable() {
                                     setState((prevState) => {
                                         const data = [...prevState.data];
                                         var convertedData =  convertForUpdate(newData)
-                                        data[data.indexOf(oldData)] = convertedData;
                                         UpdateProject(convertedData)
+                                        data[data.indexOf(oldData)] = convertedData; // todo: use object from UpdateProject
                                         return {...prevState, data};
                                     });
                                 }

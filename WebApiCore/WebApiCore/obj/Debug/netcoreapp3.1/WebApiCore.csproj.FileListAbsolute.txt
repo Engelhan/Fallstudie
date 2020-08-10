@@ -66,7 +66,6 @@ D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Npgsql.dll
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
-D:\Projekte\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csprojAssemblyReference.cache
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\staticwebassets\WebApiCore.StaticWebAssets.Manifest.cache
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\staticwebassets\WebApiCore.StaticWebAssets.xml
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.AssemblyInfoInputs.cache
@@ -126,3 +125,4 @@ C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Schema.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csproj.CoreCompileInputs.cache
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.MvcApplicationPartsAssemblyInfo.cache
+D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Schema.dll

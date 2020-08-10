@@ -11,32 +11,30 @@ export default function AddDialog(props) {
     const [emptyName, setEmptyName] = React.useState(false);
     const [projectName, setProjectName] = React.useState("");
     const [plannedSales, setPlannedSales] = React.useState(0);
-    const [plannedProfit, setPlannedProfit] = React.useState(0);
     const [estimatedCosts, setEstimatedCosts] = React.useState(0);
+    const [costSavings, setCostSavings] = React.useState(0);
     const [staffCosts, setStaffCosts] = React.useState(0);
     const [staffHours, setStaffHours] = React.useState(0);
     const [employeeNumber, setEmployeeNumber] = React.useState(0);
     const [timeExpenditure, setTimeExpenditure] = React.useState(0);
     const [endDate, setEndDate] = React.useState(new Date());
-    const [customerPriority, setCustomerPriority] = React.useState(0);
-    const [customerSales, setCustomerSales] = React.useState(0);
+    const [riskExpectedValue, setRiskExpectedValue] = React.useState(0);
 
     const setToDefault = () => {
         setProjectName("");
         setPlannedSales(0);
-        setPlannedProfit(0);
+        setCostSavings(0);
         setEstimatedCosts(0);
         setStaffCosts(0);
         setStaffHours(0);
         setEmployeeNumber(0);
         setTimeExpenditure(0);
         setEndDate(new Date());
-        setCustomerPriority(0);
-        setCustomerSales(0);
+        setRiskExpectedValue(0);
     };
 
     const addNew = () => {
-        if(projectName === ""){
+        if (projectName === "") {
             setEmptyName(true);
             return;
         }
@@ -44,18 +42,19 @@ export default function AddDialog(props) {
             projectId: 0,
             projectName: projectName,
             plannedSales: plannedSales,
-            plannedProfit: plannedProfit,
+            costSavings: costSavings,
             estimatedCosts: estimatedCosts,
             staffCosts: staffCosts,
             staffHours: staffHours,
             employeeNumber: employeeNumber,
             timeExpenditure: timeExpenditure,
             endDate: endDate.toISOString(),
-            customerPriority: customerPriority,
-            customerSales: customerSales
+            riskExpectedValue: riskExpectedValue
         }
         props.addProject(newProject);
         props.handleClose();
+        setToDefault();
+        setEmptyName(false);
     };
 
     Date.prototype.toDateInputValue = (function () {
@@ -72,7 +71,7 @@ export default function AddDialog(props) {
                 setEmptyName(false);
             }} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Neuer Projektantrag</DialogTitle>
-                <DialogContent style={{ overflow: "hidden", height: "100%", width: "100%" }}>
+                <DialogContent style={{overflow: "hidden", height: "100%", width: "100%"}}>
                     <Grid container spacing={1}>
                         <Grid container item xs={12} spacing={3}>
                             <Grid item xs={6}>
@@ -90,12 +89,11 @@ export default function AddDialog(props) {
                             </Grid>
                         </Grid>
                         <Grid container item xs={12} spacing={3}>
-
                             <Grid item xs={4}>
                                 <TextField onChange={(event,) => {
-                                    setPlannedProfit(parseInt(event.target.value));
-                                }} value={plannedProfit} margin="dense" id="PlannedProfit"
-                                           label="PlannedProfit" type="number" fullWidth/>
+                                    setCostSavings(parseInt(event.target.value));
+                                }} value={costSavings} margin="dense" id="CostSavings"
+                                           label="CostSavings" type="number" fullWidth/>
                             </Grid>
                             <Grid item xs={4}>
                                 <TextField onChange={(event) => {
@@ -131,7 +129,7 @@ export default function AddDialog(props) {
                             </Grid>
                         </Grid>
                         <Grid container item xs={12} spacing={3}>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <TextField onChange={(event) => {
                                     setEndDate(new Date(event.target.value));
                                 }}
@@ -139,17 +137,11 @@ export default function AddDialog(props) {
                                            defaultValue={new Date().toDateInputValue()}
                                            InputLabelProps={{shrink: true}}/>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <TextField onChange={(event) => {
-                                    setCustomerPriority(parseInt(event.target.value));
-                                }} value={customerPriority} margin="dense" id="CustomerPriority"
-                                           label="CustomerPriority" type="number" fullWidth/>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <TextField onChange={(event) => {
-                                    setCustomerSales(parseInt(event.target.value));
-                                }} value={customerSales} margin="dense" id="CustomerSales"
-                                           label="CustomerSales" type="number" fullWidth/>
+                                    setRiskExpectedValue(parseInt(event.target.value));
+                                }} value={riskExpectedValue} margin="dense" id="RiskExpectedValue"
+                                           label="RiskExpectedValue" type="number" fullWidth/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -158,7 +150,11 @@ export default function AddDialog(props) {
                     <Button onClick={addNew} color="primary">
                         Anlegen
                     </Button>
-                    <Button onClick={() => { props.handleClose(); }} color="primary">
+                    <Button onClick={() => {
+                        props.handleClose();
+                        setToDefault();
+                        setEmptyName(false);
+                    }} color="primary">
                         Abbrechen
                     </Button>
                 </DialogActions>
