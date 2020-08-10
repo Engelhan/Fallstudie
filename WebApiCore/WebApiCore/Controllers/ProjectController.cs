@@ -61,7 +61,7 @@ namespace WebApiCore.Controllers
             projects.ProfitPerHour = rand.Next(100);
             projects.CustomerPriority = rand.Next(100);
             projects.TimeBuffer = rand.Next(100);
-
+            projects.Ranking = rand.Next(100);
             using (var context = new ProjectsContext())
             {
                 context.Add(projects);
