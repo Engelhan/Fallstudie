@@ -89,7 +89,6 @@ C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\WebApiCore.runtimeconfig.dev.json
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\WebApiCore.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\WebApiCore.pdb
-C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csprojAssemblyReference.cache
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.AssemblyInfoInputs.cache
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.AssemblyInfo.cs
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.RazorTargetAssemblyInfo.cache
