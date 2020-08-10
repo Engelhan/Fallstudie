@@ -51,7 +51,17 @@ namespace WebApiCore.Controllers
         [HttpPost("addProjects/")]
         public IEnumerable<Projects> AddProject(Projects projects)
         {
+            var rand = new Random();
             projects.ProjectId = 0;
+            projects.PlannedProfit = rand.Next(100);
+            projects.PaybackPeriod = rand.Next(100);
+            projects.Rentability = rand.Next(100);
+            projects.StaffHours = rand.Next(100);
+            projects.AverageHourlyRate = rand.Next(100);
+            projects.ProfitPerHour = rand.Next(100);
+            projects.CustomerPriority = rand.Next(100);
+            projects.TimeBuffer = rand.Next(100);
+            projects.Ranking = rand.Next(100);
             using (var context = new ProjectsContext())
             {
                 context.Add(projects);
