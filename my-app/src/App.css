@@ -24,6 +24,11 @@
   color: white;
 }
 
+.MuiTableCell-root {
+  width: 1% !important;
+  /*https://github.com/mbrn/material-table/issues/1906*/
+}
+
 .App-body {
   display: flex;
   align-items: center;
