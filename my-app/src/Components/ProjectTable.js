@@ -39,7 +39,7 @@ export default function ProjectTable() {
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable:'never'},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable:'never'},
             {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable:'never'},
-            {title: 'Average Hourly Rate', field: 'AverageHourlyRate', type: 'numeric', editable:'never'},
+            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable:'never'},
             {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable:'never'},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable:'never'},
             {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable:'never'},

@@ -51,17 +51,29 @@ namespace WebApiCore.Controllers
         [HttpPost("addProjects/")]
         public IEnumerable<Projects> AddProject(Projects projects)
         {
-            var rand = new Random();
+            var financeKPI = 0;
+            var employeeKPI = 0;
+            projects.EmployeeSales = projects.PlannedSales / projects.StaffHours;
+            projects.AverageHourlyRate = projects.StaffCosts / projects.StaffHours;
+            projects.ProfitPerHour = projects.EmployeeSales - projects.AverageHourlyRate;
+            projects.TimeBuffer = (projects.EndDate - DateTime.Now.AddDays(projects.TimeExpenditure)).Days;
+            if (projects.PlannedSales == 0)
+            {
+                projects.PaybackPeriod = projects.EstimatedCosts / projects.CostSavings;
+                financeKPI = ((1 / projects.PaybackPeriod) * 200) * 5 * 4;
+            }
+            else
+            {
+                projects.PlannedProfit = projects.PlannedSales - projects.EstimatedCosts;
+                projects.Rentability = ((double)(projects.PlannedProfit) / projects.PlannedSales) * 100;
+                financeKPI = (int)(projects.Rentability * 5 * 4);
+                employeeKPI = projects.ProfitPerHour * 5 * 4;
+            }
+            var projectKPI = (projects.TimeBuffer * 3) + (projects.CustomerPriority * 5) * 3;
+            var risksKPI = projects.RiskExpectedValue * 5 * 3;
+            projects.Rentability = (int)projects.Rentability;
             projects.ProjectId = 0;
-            projects.PlannedProfit = rand.Next(100);
-            projects.PaybackPeriod = rand.Next(100);
-            projects.Rentability = rand.Next(100);
-            projects.EmployeeSales = rand.Next(100);
-            projects.AverageHourlyRate = rand.Next(100);
-            projects.ProfitPerHour = rand.Next(100);
-            projects.CustomerPriority = rand.Next(100);
-            projects.TimeBuffer = rand.Next(100);
-            projects.Ranking = rand.Next(100);
+            projects.Ranking = projectKPI + financeKPI + employeeKPI - risksKPI;
             using (var context = new ProjectsContext())
             {
                 context.Add(projects);
@@ -74,6 +86,28 @@ namespace WebApiCore.Controllers
         [HttpPost("updateProjects/")]
         public IEnumerable<Projects> updateProject(Projects projects)
         {
+            var financeKPI = 0;
+            var employeeKPI = 0;
+            projects.EmployeeSales = projects.PlannedSales / projects.StaffHours;
+            projects.AverageHourlyRate = projects.StaffCosts / projects.StaffHours;
+            projects.ProfitPerHour = projects.EmployeeSales - projects.AverageHourlyRate;
+            projects.TimeBuffer = (projects.EndDate - DateTime.Now.AddDays(projects.TimeExpenditure)).Days;
+            if (projects.PlannedSales == 0)
+            {
+                projects.PaybackPeriod = projects.EstimatedCosts / projects.CostSavings;
+                financeKPI = ((1 / projects.PaybackPeriod) * 200) * 5 * 4;
+            }
+            else
+            {
+                projects.PlannedProfit = projects.PlannedSales - projects.EstimatedCosts;
+                projects.Rentability = ((double)(projects.PlannedProfit) / projects.PlannedSales) * 100;
+                financeKPI = (int)(projects.Rentability * 5 * 4);
+                employeeKPI = projects.ProfitPerHour * 5 * 4;
+            }
+            var projectKPI = (projects.TimeBuffer * 3) + (projects.CustomerPriority * 5) * 3;
+            var risksKPI = projects.RiskExpectedValue * 5 * 3;
+            projects.Rentability = (int)projects.Rentability;
+            projects.Ranking = projectKPI + financeKPI + employeeKPI - risksKPI;
             using (var context = new ProjectsContext())
             {
                 context.Update(projects);
