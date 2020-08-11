@@ -47,6 +47,7 @@ namespace WebApiCore.Models
         public int TimeBuffer { get; set; }
         public int RiskExpectedValue { get; set; }
         public int Ranking { get; set; }
+        public bool Archived { get; set; }
     }
 }
 
