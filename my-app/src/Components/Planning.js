@@ -101,7 +101,7 @@ export default function PlanningProjects() {
                     }
                     setMaxScore(result);
                     setProgress(() => (0));
-                }} id="maxScore" label="Maximaler Score" type="number" autoFocus required/>
+                }} id="maxScore" label="Available Staff Hours" type="number" autoFocus required/>
             </Box>
             <TransferProjects scoreFilled={scoreFilled} key={maxScore} reset={() => {
                 setProgress(() => (0));

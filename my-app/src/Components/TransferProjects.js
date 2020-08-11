@@ -64,7 +64,7 @@ export default function TransferProjects(props) {
         var switchToRight = left;
         var valueForProgress = 0;
         switchToRight.map((item, index) => {
-            valueForProgress += parseInt(item.ranking);
+            valueForProgress += parseInt(item.staffHours);
         })
         console.log(valueForProgress);
         props.setProgressbarNormalised(valueForProgress);
@@ -76,7 +76,7 @@ export default function TransferProjects(props) {
         var switchToRight = leftChecked;
         var valueForProgress = 0;
         switchToRight.map((item, index) => {
-            valueForProgress += parseInt(item.ranking);
+            valueForProgress += parseInt(item.staffHours);
         })
         console.log(valueForProgress);
         props.setProgressbarNormalised(valueForProgress);
@@ -89,8 +89,8 @@ export default function TransferProjects(props) {
         var switchToLeft = rightChecked;
         var valueForProgress = 0;
         switchToLeft.map((item, index) => {
-            console.log(item.ranking);
-            valueForProgress -= parseInt(item.ranking);
+            console.log(item.staffHours);
+            valueForProgress -= parseInt(item.staffHours);
         })
         console.log(valueForProgress);
         props.setProgressbarNormalised(valueForProgress);
@@ -144,7 +144,7 @@ export default function TransferProjects(props) {
                             </ListItemIcon>
                             <ListItemText disableTypography primary={
                                 <Typography type="body2" style={{color: '#5858FA'}}>
-                                    ID: {item.projectId} Name: {item.projectName} Ranking: {item.ranking}
+                                    ID: {item.projectId} Name: {item.projectName} Staff Hours: {item.staffHours}
                                 </Typography>
                             }
                             />
