@@ -46,7 +46,7 @@ export default function ProjectTable() {
             // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
         ],
         data: [],
-        options: {pageSizeOptions: [8, 12, 20,], pageSize: 8 }
+        options: {pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: true }
     });
 
     const handleClickOpen = () => {
