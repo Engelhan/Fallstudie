@@ -165,28 +165,30 @@ namespace WebApiCore.Controllers
                                         'projectId':{'type':'number'},
                                         'projectName':{'type':'string'},
                                         'plannedSales':{'type':'number'},
-                                        'plannedProfit':{'type':'number'},
                                         'estimatedCosts':{'type':'number'},
+                                        'costSavings':{'type':'number'},
                                         'staffCosts':{'type':'number'},
                                         'staffHours':{'type':'number'},
                                         'employeeNumber':{'type':'number'},
                                         'timeExpenditure':{'type':'number'},
                                         'endDate':{'type':'string'},
                                         'customerPriority':{'type':'number'}
+                                        'riskExpectedValue':{'type':'number'},
                                     },
                                     'additionalProperties':false,
                                     'required':[
                                                 'projectId',
                                                 'projectName',
                                                 'plannedSales',
-                                                'plannedProfit',
+                                                'costSavings',
                                                 'estimatedCosts',
                                                 'staffCosts',
                                                 'staffHours',
                                                 'employeeNumber',
                                                 'timeExpenditure',
                                                 'endDate',
-                                                'customerPriority'
+                                                'customerPriority',
+                                                'riskExpectedValue'
                                                ],
                                 },
                               }";
