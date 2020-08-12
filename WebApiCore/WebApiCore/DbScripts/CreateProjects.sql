@@ -27,7 +27,7 @@ CREATE TABLE "Projects"
     "Archived" boolean,
     "ProjectLeader" text,
     "ProjectMembers" text,
-    "RegistrationDate" text,
+    "RegistrationDate" date,
     "Goal" text,
     "CustomerName" text,
     "ContactPerson" text,

@@ -10,7 +10,8 @@ import Announcement from '@material-ui/icons/Announcement';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/DeleteOutline';
 import Dehaze from '@material-ui/icons/Dehaze';
-import AddDialog from "./AddDialog"
+import AddDialogInternal from "./AddDialogInternal"
+import AddDialogExternal from "./AddDialogExternal"
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -40,17 +41,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProjectTable(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [openI, setOpenI] = React.useState(false);
+    const [openE, setOpenE] = React.useState(false);
     const [state, setState] = React.useState({
         data: []
     });
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if(props.title === "Internal"){
+            setOpenI(true);
+        }else   {
+            setOpenE(true);
+        }
     };
 
     const handleClose = () => {
-        setOpen(false);
+        if(props.title === "Internal"){
+            setOpenI(false);
+        }else   {
+            setOpenE(false);
+        }
     };
 
     const LoadProjects = () => {
@@ -174,7 +184,7 @@ export default function ProjectTable(props) {
 
     return (<div>
             <MaterialTable
-                title={props.title}
+                title={props.title + " Projects"}
                 columns={props.columns}
                 data={state.data}
                 options={{ pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: props.showColumnB }}
@@ -215,12 +225,13 @@ export default function ProjectTable(props) {
             />
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
-                <Button disabled={props.addHidden} startIcon={<Add/>} className={classes.button} onClick={handleClickOpen}>Neuer Antrag
-                    Hinzufügen</Button>
+                {props.title === "All" ? null : <Button startIcon={<Add/>} className={classes.button} onClick={handleClickOpen}>Add {props.title} Project
+                    </Button>}
                 <Button startIcon={<ReloadIcon/>} className={classes.button}
                         onClick={LoadProjects}>Aktualisieren</Button>
             </ButtonGroup>
-            <AddDialog open={open} handleClose={handleClose} addProject={addProject}/>
+            <AddDialogInternal open={openI} handleClose={handleClose} addProject={addProject}/>
+            <AddDialogExternal open={openE} handleClose={handleClose} addProject={addProject}/>
         </div>
     );
 }

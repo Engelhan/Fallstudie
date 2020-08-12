@@ -169,9 +169,9 @@ export default function MiniDrawer() {
 
     const getInternalColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName'},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never'},
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -194,9 +194,9 @@ export default function MiniDrawer() {
 
     const getExternalColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName'},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never'},
-            {title:  'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true,},
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -224,11 +224,11 @@ export default function MiniDrawer() {
         }
         switch (param) {
             case 'MainTable':
-                return <ProjectTable columns={getAllColumns()} showInfoDialog={true} title={"All Projects"} showColumnB={true} addHidden={true} editHidden={true} deleteHidden={true}/>;
+                return <ProjectTable columns={getAllColumns()} showInfoDialog={true} title={"All"} showColumnB={true} editHidden={true} deleteHidden={true}/>;
             case 'MainTableInternal':
-                return <ProjectTable columns={getInternalColumns()}  showInfoDialog={false} title={"Internal Projects"} showColumnB={false} addHidden={false} editHidden={false} deleteHidden={false}/>;
+                return <ProjectTable columns={getInternalColumns()} showInfoDialog={false} title={"Internal"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
             case 'MainTableExternal':
-                return <ProjectTable columns={getExternalColumns()} showInfoDialog={false} title={"External Projects"} showColumnB={false} addHidden={false} editHidden={false} deleteHidden={false}/>;
+                return <ProjectTable columns={getExternalColumns()} showInfoDialog={false} title={"External"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
             case 'Upload':
                 return <DropZone/>;
             case 'Planning':
@@ -310,7 +310,10 @@ export default function MiniDrawer() {
             case 'Controlling':
                 if (pos === 1) {
                     return ['Übersicht'];
-                } else {
+                }else if(pos === 2)
+                {
+                    return  [];
+                }else {
                     return ['Logout'];
                 }
             default:
