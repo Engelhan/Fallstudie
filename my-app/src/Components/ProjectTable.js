@@ -8,7 +8,8 @@ import ReloadIcon from '@material-ui/icons/Cached';
 import Add from '@material-ui/icons/Add';
 import Announcement from '@material-ui/icons/Announcement';
 import Edit from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
+import Delete from '@material-ui/icons/DeleteOutline';
+import Dehaze from '@material-ui/icons/Dehaze';
 import AddDialog from "./AddDialog"
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: "white",
             backgroundColor: '#f77376',
+        }
+    },
+    iconHover2:{
+        '&:hover': {
+            color: "#f77376",
         }
     },
     buttonGroup: {
@@ -173,7 +179,7 @@ export default function ProjectTable(props) {
                 data={state.data}
                 options={{ pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: props.showColumnB }}
                 actions={actions()}
-                icons={{Edit: () => <Edit className={classes.iconHover}/>, Delete: () => <Delete className={classes.iconHover}/>}}
+                icons={{ViewColumn: () => <Dehaze className={classes.iconHover2}/>, Edit: () => <Edit className={classes.iconHover2}/>, Delete: () => <Delete className={classes.iconHover2}/>}}
                 editable={{
                     isEditHidden: () => {return props.editHidden},
                     onRowUpdate: (newData, oldData) =>

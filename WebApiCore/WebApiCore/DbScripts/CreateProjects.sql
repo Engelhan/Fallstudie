@@ -24,6 +24,20 @@ CREATE TABLE "Projects"
     "TimeBuffer" integer, 
     "RiskExpectedValue" integer,
     "Ranking" integer,
+    "Archived" boolean,
+    "ProjectLeader" text,
+    "ProjectMembers" text,
+    "RegistrationDate" text,
+    "Goal" text,
+    "CustomerName" text,
+    "ContactPerson" text,
+    "Address" text,
+    "BusinessField" text,
+    "Client" text,
+    "Department" text,
+    "Site" text,
+    "PhoneNumber" text,
+    "EMail" text,
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("ProjectId")
 )
 

@@ -26,12 +26,18 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
+import Public from '@material-ui/icons/Public';
+import Business from '@material-ui/icons/Business';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    divider: {
+        // Theme Color, or use css color in quote
+        background: 'white',
     },
     appBar: {
         background: '#143a4e',
@@ -62,8 +68,11 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#f77376',
         }
     },
+    iconButton:{
+        color: "white"
+    },
     drawer: {
-        opacity: 0.8,
+        opacity: 0.75,
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
@@ -100,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(2),
+        padding: theme.spacing(2), overflow: "auto"
     },
 }));
 
@@ -135,8 +144,8 @@ export default function MiniDrawer() {
 
     const getAllColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#f77376', color: "white" }, headerStyle: { backgroundColor: '#f77376'}},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#f77376' }, headerStyle: { backgroundColor: '#f77376'}},
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
             {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
@@ -187,7 +196,7 @@ export default function MiniDrawer() {
         return [
             {title: 'Project Name', field: 'projectName'},
             {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never'},
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true},
+            {title:  'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true,},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -280,28 +289,32 @@ export default function MiniDrawer() {
         }
     };
 
-    const switchRoles = (top) => {
+    const switchRoles = (pos) => {
         switch (role) {
             case 'Admin':
-                if (top === true) {
-                    return ['Übersicht','Übersicht Intern','Übersicht Extern', 'Upload'];
-                } else {
-                    return ['Planungsübersicht', 'Logout'];
+                if (pos === 1) {
+                    return ['Übersicht','Übersicht Intern','Übersicht Extern'];
+                } else if(pos === 2) {
+                    return ['Planungsübersicht', 'Upload'];
+                }else {
+                    return ['Logout'];
                 }
             case 'ProjectManager':
-                if (top === true) {
+                if (pos === 1) {
                     return ['Übersicht','Übersicht Intern','Übersicht Extern',];
-                } else {
-                    return ['Planungsübersicht', 'Logout'];
+                }else if(pos === 2) {
+                    return ['Planungsübersicht'];
+                }else {
+                    return ['Logout'];
                 }
             case 'Controlling':
-                if (top === true) {
+                if (pos === 1) {
                     return ['Übersicht'];
                 } else {
                     return ['Logout'];
                 }
             default:
-                if (top === true) {
+                if (pos === 1 || pos === 2) {
                     return [];
                 } else {
                     return ['Logout'];
@@ -313,6 +326,10 @@ export default function MiniDrawer() {
         switch (param) {
             case 'Übersicht':
                 return <NewIcon/>;
+            case 'Übersicht Intern':
+                return  <Business/>;
+            case 'Übersicht Extern':
+                return <Public/>;
             case 'Upload':
                 return <CloudUpload/>;
             case 'Planungsübersicht':
@@ -339,7 +356,7 @@ export default function MiniDrawer() {
         <div className={classes.root}>
             <CssBaseline/>
             <AppBar
-                position="fixed"
+                position="absolute"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
@@ -381,30 +398,41 @@ export default function MiniDrawer() {
                     </IconButton>
                 </div>
                 <List>
-                    {switchRoles(true).map((text, index) => (
+                    {switchRoles(1).map((text, index) => (
                     <ListItem className={classes.hoverButton} button key={text} onClick={() => {
                         switchSetView(text)
                     }}>
-                        <ListItemIcon>{switchIcons(text)}</ListItemIcon>
+                        <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
                         <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
                     </ListItem>
                     ))}
                 </List>
-                <Divider/>
+                <Divider classes={{root: classes.divider}}/>
                 <List>
-                    {switchRoles(false).map((text, index) => (
+                    {switchRoles(2).map((text, index) => (
+                        <ListItem className={classes.hoverButton} button key={text} onClick={() => {
+                            switchSetView(text)
+                        }}>
+                            <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
+                            <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider hidden={role === "Controlling"}  classes={{root: classes.divider}} />
+                <List>
+                    {switchRoles(3).map((text, index) => (
                         <ListItem className={classes.hoverButton} button key={text} onClick={() => {
                             switchSetView(text)
                             if (text === 'Logout') {
                                 setLoggedIn(false);
                             }
                         }}>
-                            <ListItemIcon>{switchIcons(text)}</ListItemIcon>
+                            <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
                             <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
                         </ListItem>
                     ))}
                 </List>
-            </Drawer>10
+            </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
                 {switchView(view.selectedView)}

@@ -28,7 +28,10 @@
   width: 1% !important;
   /*https://github.com/mbrn/material-table/issues/1906*/
 }
-
+.MuiTableCell-footer{
+  float: inherit !important;
+  /*fix the Footerbuttons of Table but why?*/
+}
 .App-body {
   display: flex;
   align-items: center;
