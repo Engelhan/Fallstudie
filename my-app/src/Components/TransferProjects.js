@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
     },
+    rootCheck: {
+        "&$checked": {
+            color: '#f77376'
+        }
+    },
+    checked: {},
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
@@ -137,15 +143,24 @@ export default function TransferProjects(props) {
                             <ListItemIcon>
                                 <Checkbox
                                     checked={checked.indexOf(item) !== -1}
+                                    classes={{
+                                        root: classes.rootCheck,
+                                        checked: classes.checked
+                                    }}
                                     tabIndex={-1}
                                     disableRipple
                                     inputProps={{'aria-labelledby': labelId}}
                                 />
                             </ListItemIcon>
                             <ListItemText disableTypography primary={
-                                <Typography type="body2" style={{color: '#5858FA'}}>
-                                    ID: {item.projectId} Name: {item.projectName} Staff Hours: {item.staffHours}
-                                </Typography>
+                                <div>
+                                    <Typography align="center" type="body2" style={{ fontWeight: "bold", color: '#143a4e'}}>
+                                        Name: '{item.projectName}'  Ranking: {item.ranking}
+                                    </Typography>
+                                    <Typography  align="center" type="body2" style={{color: '#64bab6'}}>
+                                        Staff Hours: {item.staffHours}
+                                    </Typography>
+                                </div>
                             }
                             />
                         </ListItem>
