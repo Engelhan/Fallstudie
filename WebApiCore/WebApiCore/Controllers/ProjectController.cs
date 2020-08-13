@@ -37,16 +37,28 @@ namespace WebApiCore.Controllers
             return new List<Projects> { projects };
         }
 
-        [HttpGet("getProjects")]
-        public IEnumerable<Projects> GetProjects()
+        [HttpGet("getInternalProjects")]
+        public IEnumerable<Projects> GetInternalProjects()
         {
             var projects = new List<Projects>();
             using (var context = new ProjectsContext())
             {
-                projects = context.Projects.ToList();
+                projects = context.Projects.Where(p => p.PlannedSales == 0).ToList();
             }
             return projects;
         }
+
+        [HttpGet("getExternalProjects")]
+        public IEnumerable<Projects> GetExternalProjects()
+        {
+            var projects = new List<Projects>();
+            using (var context = new ProjectsContext())
+            {
+                projects = context.Projects.Where(p => p.PlannedSales != 0).ToList();
+            }
+            return projects;
+        }
+
 
         [HttpPost("addProjects/")]
         public IEnumerable<Projects> AddProject(Projects projects)
