@@ -12,6 +12,7 @@ import Delete from '@material-ui/icons/DeleteOutline';
 import Dehaze from '@material-ui/icons/Dehaze';
 import AddDialogInternal from "./AddDialogInternal"
 import AddDialogExternal from "./AddDialogExternal"
+import InformationDialog from "./InformationDialog"
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -43,9 +44,11 @@ export default function ProjectTable(props) {
     const classes = useStyles();
     const [openI, setOpenI] = React.useState(false);
     const [openE, setOpenE] = React.useState(false);
+    const [openInfo, setOpenInfo] = React.useState(false);
     const [state, setState] = React.useState({
         data: []
     });
+    const [infoData, setInfoData] = React.useState(null);
 
     const handleClickOpen = () => {
         if (props.title === "Internal") {
@@ -182,7 +185,8 @@ export default function ProjectTable(props) {
                     icon: () => <Announcement className={classes.iconHover}/>,
                     tooltip: 'Show All Information',
                     onClick: (event, rowData) => {
-                        alert("Show more Info for: ID " + rowData.projectId + " Name: " + rowData.projectName);
+                        setInfoData(rowData)
+                        setOpenInfo(true);
                     }
                 }
             ]
@@ -250,6 +254,7 @@ export default function ProjectTable(props) {
             </ButtonGroup>
             <AddDialogInternal open={openI} handleClose={handleClose} addProject={addProject}/>
             <AddDialogExternal open={openE} handleClose={handleClose} addProject={addProject}/>
+            <InformationDialog data={infoData} open={openInfo} handleClose={() => {setOpenInfo(false); setInfoData(null)}}/>
         </div>
     );
 }

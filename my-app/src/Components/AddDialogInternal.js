@@ -42,7 +42,7 @@ export default function AddDialogInternal(props) {
     const [registrationDate, setRegistrationDate] = React.useState(new Date());
     const [goal, setGoal] = React.useState("");
     //Customer
-    const [customer, setCustomer] = React.useState(1);
+    const [customerName, setCustomerName] = React.useState("1");
     const setToDefault = () => {
         setProjectName("");
         setEstimatedCosts(0);
@@ -57,6 +57,7 @@ export default function AddDialogInternal(props) {
         setProjectMembers("");
         setRegistrationDate(new Date());
         setGoal("");
+        setCustomerName("1")
     };
 
     const addNew = () => {
@@ -78,7 +79,8 @@ export default function AddDialogInternal(props) {
             projectLeader: projectLeader,
             projectMembers: projectMembers,
             registrationDate: registrationDate.toISOString(),
-            goal: goal
+            goal: goal,
+            customerName: customerName
         }
         props.addProject(newProject);
         props.handleClose();
@@ -187,8 +189,8 @@ export default function AddDialogInternal(props) {
                                 <FormControl fullWidth className={classes.formControl}>
                                     <InputLabel htmlFor="age-native-simple">Customer</InputLabel>
                                     <Select native onChange={(event) => {
-                                            setCustomer(parseInt(event.target.value));
-                                        }} value={customer}
+                                            setCustomerName(event.target.value);
+                                        }} value={customerName}
                                         inputProps={{
                                             name: 'Customer',
                                             id: 'Customer-native-simple',
