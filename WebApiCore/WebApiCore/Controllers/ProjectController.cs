@@ -37,6 +37,7 @@ namespace WebApiCore.Controllers
             return new List<Projects> { projects };
         }
 
+
         [HttpGet("getProjects")]
         public IEnumerable<Projects> GetProjects()
         {
@@ -96,6 +97,18 @@ namespace WebApiCore.Controllers
             }
 
             return new List<Projects> { projects };
+        }
+
+        [HttpPost("getOneProject/")]
+        public IEnumerable<Projects> getOneProject(int projectID)
+        {
+
+            var projects = new List<Projects>();
+            using (var context = new ProjectsContext())
+            {
+                projects = context.Projects.Where(p => p.ProjectId != projectID).ToList();
+            }
+            return projects;
         }
 
         public void calculateKPI(Projects projects)
