@@ -37,6 +37,17 @@ namespace WebApiCore.Controllers
             return new List<Projects> { projects };
         }
 
+        [HttpGet("getProjects")]
+        public IEnumerable<Projects> GetProjects()
+        {
+            var projects = new List<Projects>();
+            using (var context = new ProjectsContext())
+            {
+                projects = context.Projects.ToList();
+            }
+            return projects;
+        }
+
         [HttpGet("getInternalProjects")]
         public IEnumerable<Projects> GetInternalProjects()
         {
