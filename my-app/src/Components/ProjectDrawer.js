@@ -28,6 +28,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Public from '@material-ui/icons/Public';
 import Business from '@material-ui/icons/Business';
+import Beenhere from '@material-ui/icons/Beenhere';
 
 const drawerWidth = 240;
 
@@ -63,12 +64,12 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
-    hoverButton:{
+    hoverButton: {
         '&:hover': {
             backgroundColor: '#f77376',
         }
     },
-    iconButton:{
+    iconButton: {
         color: "white"
     },
     drawer: {
@@ -144,8 +145,21 @@ export default function MiniDrawer() {
 
     const getAllColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {
+                title: 'Project Name',
+                field: 'projectName',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
+            {
+                title: 'Ranking',
+                field: 'ranking',
+                defaultSort: "desc",
+                type: 'numeric',
+                editable: 'never',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
             {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
@@ -169,8 +183,21 @@ export default function MiniDrawer() {
 
     const getInternalColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {
+                title: 'Project Name',
+                field: 'projectName',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
+            {
+                title: 'Ranking',
+                field: 'ranking',
+                defaultSort: "desc",
+                type: 'numeric',
+                editable: 'never',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
             {title: 'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
@@ -194,8 +221,21 @@ export default function MiniDrawer() {
 
     const getExternalColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {
+                title: 'Project Name',
+                field: 'projectName',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
+            {
+                title: 'Ranking',
+                field: 'ranking',
+                defaultSort: "desc",
+                type: 'numeric',
+                editable: 'never',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
             {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
@@ -217,6 +257,17 @@ export default function MiniDrawer() {
         ];
     }
 
+    const getAarchivedColumns = () => {
+        return [
+            {title: 'Project Name', field: 'projectName', cellStyle: {backgroundColor: '#edf7f7'}, headerStyle: {backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable: 'never', cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}},
+            {title: 'Accepted', field: 'archived', lookup: {true: 'yes', false: 'no'}},
+            {title: 'Customer Name', field: 'customerName'},
+            {title: 'End Date', field: 'endDate', type: 'date'},
+        ];
+    }
+
     const switchView = (param) => {
         console.log("switchView " + loggedIn);
         if (loggedIn === false) {
@@ -224,11 +275,17 @@ export default function MiniDrawer() {
         }
         switch (param) {
             case 'MainTable':
-                return <ProjectTable columns={getAllColumns()} showInfoDialog={true} title={"All"} showColumnB={true} editHidden={true} deleteHidden={true}/>;
+                return <ProjectTable columns={getAllColumns()} showInfoDialog={true} title={"All"} showColumnB={true}
+                                     editHidden={true} deleteHidden={true}/>;
             case 'MainTableInternal':
-                return <ProjectTable columns={getInternalColumns()} showInfoDialog={false} title={"Internal"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
+                return <ProjectTable columns={getInternalColumns()} showInfoDialog={false} title={"Internal"}
+                                     showColumnB={false} editHidden={false} deleteHidden={false}/>;
             case 'MainTableExternal':
-                return <ProjectTable columns={getExternalColumns()} showInfoDialog={false} title={"External"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
+                return <ProjectTable columns={getExternalColumns()} showInfoDialog={false} title={"External"}
+                                     showColumnB={false} editHidden={false} deleteHidden={false}/>;
+            case 'MainTableArchived':
+                return <ProjectTable columns={getAarchivedColumns()} showInfoDialog={true} title={"Archived"}
+                                     showColumnB={false} editHidden={true} deleteHidden={true}/>;
             case 'Upload':
                 return <DropZone/>;
             case 'Planning':
@@ -245,21 +302,27 @@ export default function MiniDrawer() {
             return;
         }
         switch (param) {
-            case 'Übersicht':
+            case 'Projectrequests':
                 setView((prevState) => {
                     prevState.selectedView = 'MainTable';
                     return {...prevState, prevState};
                 });
                 break
-            case 'Übersicht Intern':
+            case 'Internal':
                 setView((prevState) => {
                     prevState.selectedView = 'MainTableInternal';
                     return {...prevState, prevState};
                 });
                 break
-            case 'Übersicht Extern':
+            case 'External':
                 setView((prevState) => {
                     prevState.selectedView = 'MainTableExternal';
+                    return {...prevState, prevState};
+                });
+                break
+            case 'Accepted':
+                setView((prevState) => {
+                    prevState.selectedView = 'MainTableArchived';
                     return {...prevState, prevState};
                 });
                 break
@@ -269,7 +332,7 @@ export default function MiniDrawer() {
                     return {...prevState, prevState};
                 });
                 break
-            case 'Planungsübersicht':
+            case 'Resource Planning':
                 setView((prevState) => {
                     prevState.selectedView = 'Planning';
                     return {...prevState, prevState};
@@ -293,27 +356,26 @@ export default function MiniDrawer() {
         switch (role) {
             case 'Admin':
                 if (pos === 1) {
-                    return ['Übersicht','Übersicht Intern','Übersicht Extern'];
-                } else if(pos === 2) {
-                    return ['Planungsübersicht', 'Upload'];
-                }else {
+                    return ['Projectrequests', 'Internal', 'External', 'Accepted'];
+                } else if (pos === 2) {
+                    return ['Resource Planning', 'Upload'];
+                } else {
                     return ['Logout'];
                 }
             case 'ProjectManager':
                 if (pos === 1) {
-                    return ['Übersicht','Übersicht Intern','Übersicht Extern',];
-                }else if(pos === 2) {
-                    return ['Planungsübersicht'];
-                }else {
+                    return ['Projectrequests', 'Internal', 'External', 'Accepted'];
+                } else if (pos === 2) {
+                    return ['Resource Planning'];
+                } else {
                     return ['Logout'];
                 }
             case 'Controlling':
                 if (pos === 1) {
-                    return ['Übersicht'];
-                }else if(pos === 2)
-                {
-                    return  [];
-                }else {
+                    return ['Projectrequests', 'Accepted'];
+                } else if (pos === 2) {
+                    return [];
+                } else {
                     return ['Logout'];
                 }
             default:
@@ -327,15 +389,17 @@ export default function MiniDrawer() {
 
     const switchIcons = (param) => {
         switch (param) {
-            case 'Übersicht':
+            case 'Projectrequests':
                 return <NewIcon/>;
-            case 'Übersicht Intern':
-                return  <Business/>;
-            case 'Übersicht Extern':
+            case 'Internal':
+                return <Business/>;
+            case 'External':
                 return <Public/>;
+            case 'Accepted':
+                return <Beenhere/>;
             case 'Upload':
                 return <CloudUpload/>;
-            case 'Planungsübersicht':
+            case 'Resource Planning':
                 return <ListAltIcon/>;
             case 'Logout':
                 return <ExitToApp/>;
@@ -379,7 +443,7 @@ export default function MiniDrawer() {
                     <Typography variant="h6" className={classes.title} noWrap>
                         Projectmanager
                     </Typography>
-                    { loggedIn === true ? displayLoggedInUser() :<div/> }
+                    {loggedIn === true ? displayLoggedInUser() : <div/>}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -402,12 +466,12 @@ export default function MiniDrawer() {
                 </div>
                 <List>
                     {switchRoles(1).map((text, index) => (
-                    <ListItem className={classes.hoverButton} button key={text} onClick={() => {
-                        switchSetView(text)
-                    }}>
-                        <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
-                        <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
-                    </ListItem>
+                        <ListItem className={classes.hoverButton} button key={text} onClick={() => {
+                            switchSetView(text)
+                        }}>
+                            <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
+                            <ListItemText primaryTypographyProps={{style: {fontWeight: "bold"}}} primary={text}/>
+                        </ListItem>
                     ))}
                 </List>
                 <Divider classes={{root: classes.divider}}/>
@@ -417,11 +481,11 @@ export default function MiniDrawer() {
                             switchSetView(text)
                         }}>
                             <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
-                            <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
+                            <ListItemText primaryTypographyProps={{style: {fontWeight: "bold"}}} primary={text}/>
                         </ListItem>
                     ))}
                 </List>
-                <Divider hidden={role === "Controlling"}  classes={{root: classes.divider}} />
+                <Divider hidden={role === "Controlling"} classes={{root: classes.divider}}/>
                 <List>
                     {switchRoles(3).map((text, index) => (
                         <ListItem className={classes.hoverButton} button key={text} onClick={() => {
@@ -431,7 +495,7 @@ export default function MiniDrawer() {
                             }
                         }}>
                             <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
-                            <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
+                            <ListItemText primaryTypographyProps={{style: {fontWeight: "bold"}}} primary={text}/>
                         </ListItem>
                     ))}
                 </List>
