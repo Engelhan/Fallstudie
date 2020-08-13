@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#f77376',
         }
     },
-    iconHover:{
+    iconHover: {
         '&:hover': {
             color: "white",
             backgroundColor: '#f77376',
         }
     },
-    iconHover2:{
+    iconHover2: {
         '&:hover': {
             color: "#f77376",
         }
@@ -48,25 +48,30 @@ export default function ProjectTable(props) {
     });
 
     const handleClickOpen = () => {
-        if(props.title === "Internal"){
+        if (props.title === "Internal") {
             setOpenI(true);
-        }else   {
+        } else {
             setOpenE(true);
         }
     };
 
     const handleClose = () => {
-        if(props.title === "Internal"){
+        if (props.title === "Internal") {
             setOpenI(false);
-        }else   {
+        } else {
             setOpenE(false);
         }
     };
 
     const LoadProjects = () => {
         var resultData = [];
-        axios.get("https://localhost:5001/project/getProjects"
-        ).then((result) => {
+        var url = "https://localhost:5001/project/getProjects";
+        if (props.title === "Internal") {
+            url = "https://localhost:5001/project/getInternalProjects";
+        }else if(props.title === "External"){
+            url = "https://localhost:5001/project/getExternalProjects";
+        }
+        axios.get(url).then((result) => {
             console.log(result.data);
             setTimeout(() => {
                 setState((prevState) => {
@@ -83,7 +88,7 @@ export default function ProjectTable(props) {
 
     useEffect(() => {
         LoadProjects();
-    }, []);
+    }, [props.title]);
 
     const UpdateProject = (newData) => new Promise((resolve) => {
         console.log(newData);
@@ -162,22 +167,26 @@ export default function ProjectTable(props) {
             profitPerHour: parseInt(newData.profitPerHour),
             customerPriority: parseInt(newData.customerPriority),
             timeBuffer: parseInt(newData.timeBuffer),
-            ranking: parseInt(newData.ranking)
+            ranking: parseInt(newData.ranking),
+            projectLeader: newData.projectLeader,
+            projectMembers: newData.projectMembers,
+            registrationDate: newData.registrationDate,
+            goal: newData.goal
         };
     }
 
     const actions = () => {
-        if(props.showInfoDialog === true){
-           return [
+        if (props.showInfoDialog === true) {
+            return [
                 {
                     icon: () => <Announcement className={classes.iconHover}/>,
                     tooltip: 'Show All Information',
                     onClick: (event, rowData) => {
-                        alert("Show more Info for: ID " + rowData.projectId + " Name: "+ rowData.projectName);
+                        alert("Show more Info for: ID " + rowData.projectId + " Name: " + rowData.projectName);
                     }
                 }
             ]
-        } else  {
+        } else {
             return [];
         }
     }
@@ -187,17 +196,23 @@ export default function ProjectTable(props) {
                 title={props.title + " Projects"}
                 columns={props.columns}
                 data={state.data}
-                options={{ pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: props.showColumnB }}
+                options={{pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: props.showColumnB}}
                 actions={actions()}
-                icons={{ViewColumn: () => <Dehaze className={classes.iconHover2}/>, Edit: () => <Edit className={classes.iconHover2}/>, Delete: () => <Delete className={classes.iconHover2}/>}}
+                icons={{
+                    ViewColumn: () => <Dehaze className={classes.iconHover2}/>,
+                    Edit: () => <Edit className={classes.iconHover2}/>,
+                    Delete: () => <Delete className={classes.iconHover2}/>
+                }}
                 editable={{
-                    isEditHidden: () => {return props.editHidden},
+                    isEditHidden: () => {
+                        return props.editHidden
+                    },
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve) => {
                             setTimeout(() => {
                                 resolve();
                                 if (oldData) {
-                                    var convertedData =  convertForUpdate(newData)
+                                    var convertedData = convertForUpdate(newData)
                                     UpdateProject(convertedData).then((result) => {
                                         setState((prevState) => {
                                             const data = [...prevState.data];
@@ -208,7 +223,9 @@ export default function ProjectTable(props) {
                                 }
                             }, 0);
                         }),
-                    isDeleteHidden: () => {return props.deleteHidden},
+                    isDeleteHidden: () => {
+                        return props.deleteHidden
+                    },
                     onRowDelete: (oldData) =>
                         new Promise((resolve) => {
                             setTimeout(() => {
@@ -225,8 +242,9 @@ export default function ProjectTable(props) {
             />
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
-                {props.title === "All" ? null : <Button startIcon={<Add/>} className={classes.button} onClick={handleClickOpen}>Add {props.title} Project
-                    </Button>}
+                {props.title === "All" ? null : <Button startIcon={<Add/>} className={classes.button}
+                                                        onClick={handleClickOpen}>Add {props.title} Project
+                </Button>}
                 <Button startIcon={<ReloadIcon/>} className={classes.button}
                         onClick={LoadProjects}>Aktualisieren</Button>
             </ButtonGroup>
