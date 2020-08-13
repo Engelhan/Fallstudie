@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(5),
         width: "50%",
         margin: "auto"
+    },
+    buttonHover: {
+        '&:hover': {
+            color: "white",
+            backgroundColor: '#f77376',
+        }
     }
 }));
 
@@ -67,7 +73,7 @@ export default function LoginTab(props) {
                     </Grid>
                 </Grid>
                 <Grid container justify="center" style={{marginTop: '30px'}}>
-                    <Button startIcon={<VpnKey/>} className={classes.button}
+                    <Button className={classes.buttonHover} startIcon={<VpnKey/>}
                             onClick={handleClickLogin} variant="outlined" size="small"
                             color="inherit">Login</Button>
                 </Grid>

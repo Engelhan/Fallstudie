@@ -6,12 +6,32 @@ import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import ReloadIcon from '@material-ui/icons/Cached';
 import Add from '@material-ui/icons/Add';
-import AddDialog from "./AddDialog"
+import Announcement from '@material-ui/icons/Announcement';
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/DeleteOutline';
+import Dehaze from '@material-ui/icons/Dehaze';
+import AddDialogInternal from "./AddDialogInternal"
+import AddDialogExternal from "./AddDialogExternal"
 
 const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(2),
         float: "right",
+        '&:hover': {
+            color: "white",
+            backgroundColor: '#f77376',
+        }
+    },
+    iconHover:{
+        '&:hover': {
+            color: "white",
+            backgroundColor: '#f77376',
+        }
+    },
+    iconHover2:{
+        '&:hover': {
+            color: "#f77376",
+        }
     },
     buttonGroup: {
         width: '100%',
@@ -19,42 +39,28 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProjectTable() {
+export default function ProjectTable(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [openI, setOpenI] = React.useState(false);
+    const [openE, setOpenE] = React.useState(false);
     const [state, setState] = React.useState({
-        columns: [
-            {title: 'Project Name', field: 'projectName'},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never'},
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
-            {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
-            {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
-            {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
-            {title: 'Staff Hours', field: 'staffHours', type: 'numeric'},
-            {title: 'Employee Number', field: 'employeeNumber', type: 'numeric'},
-            {title: 'Time Expenditure', field: 'timeExpenditure', type: 'numeric'},
-            {title: 'End Date', field: 'endDate', type: 'date'},
-            {title: 'Risk Expected Value', field: 'riskExpectedValue', type: 'numeric'},
-            {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never'},
-            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never'},
-            {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never'},
-            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never'},
-            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never'},
-            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never'},
-            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never'},
-            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never'},
-            // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
-        ],
-        data: [],
-        options: {pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: true }
+        data: []
     });
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if(props.title === "Internal"){
+            setOpenI(true);
+        }else   {
+            setOpenE(true);
+        }
     };
 
     const handleClose = () => {
-        setOpen(false);
+        if(props.title === "Internal"){
+            setOpenI(false);
+        }else   {
+            setOpenE(false);
+        }
     };
 
     const LoadProjects = () => {
@@ -160,14 +166,32 @@ export default function ProjectTable() {
         };
     }
 
+    const actions = () => {
+        if(props.showInfoDialog === true){
+           return [
+                {
+                    icon: () => <Announcement className={classes.iconHover}/>,
+                    tooltip: 'Show All Information',
+                    onClick: (event, rowData) => {
+                        alert("Show more Info for: ID " + rowData.projectId + " Name: "+ rowData.projectName);
+                    }
+                }
+            ]
+        } else  {
+            return [];
+        }
+    }
+
     return (<div>
             <MaterialTable
-                title="Projekts"
-                columns={state.columns}
+                title={props.title + " Projects"}
+                columns={props.columns}
                 data={state.data}
-                options={state.options}
-                pageSizeOptions={[10,15,20]}
+                options={{ pageSizeOptions: [8, 12, 20,], pageSize: 8, columnsButton: props.showColumnB }}
+                actions={actions()}
+                icons={{ViewColumn: () => <Dehaze className={classes.iconHover2}/>, Edit: () => <Edit className={classes.iconHover2}/>, Delete: () => <Delete className={classes.iconHover2}/>}}
                 editable={{
+                    isEditHidden: () => {return props.editHidden},
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve) => {
                             setTimeout(() => {
@@ -184,6 +208,7 @@ export default function ProjectTable() {
                                 }
                             }, 0);
                         }),
+                    isDeleteHidden: () => {return props.deleteHidden},
                     onRowDelete: (oldData) =>
                         new Promise((resolve) => {
                             setTimeout(() => {
@@ -200,12 +225,13 @@ export default function ProjectTable() {
             />
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
-                <Button startIcon={<Add/>} className={classes.button} onClick={handleClickOpen}>Neuer Antrag
-                    Hinzufügen</Button>
+                {props.title === "All" ? null : <Button startIcon={<Add/>} className={classes.button} onClick={handleClickOpen}>Add {props.title} Project
+                    </Button>}
                 <Button startIcon={<ReloadIcon/>} className={classes.button}
                         onClick={LoadProjects}>Aktualisieren</Button>
             </ButtonGroup>
-            <AddDialog open={open} handleClose={handleClose} addProject={addProject}/>
+            <AddDialogInternal open={openI} handleClose={handleClose} addProject={addProject}/>
+            <AddDialogExternal open={openE} handleClose={handleClose} addProject={addProject}/>
         </div>
     );
 }

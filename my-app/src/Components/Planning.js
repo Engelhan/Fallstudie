@@ -92,9 +92,9 @@ export default function PlanningProjects() {
 
     return (
         <div className={classes.root}>
-            <h1>Ressourcenplanung</h1>
+            <h1>Project Resource Planning</h1>
             <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="background.paper">
-                <TextField fullWidth variant={'outlined'} value={maxScore} onChange={(event) => {
+                <TextField variant={'outlined'} value={maxScore} onChange={(event) => {
                     var result = event.target.value;
                     if (result <= 0) {
                         result = 0;

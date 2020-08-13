@@ -26,6 +26,8 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
+import Public from '@material-ui/icons/Public';
+import Business from '@material-ui/icons/Business';
 
 const drawerWidth = 240;
 
@@ -33,7 +35,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+    divider: {
+        // Theme Color, or use css color in quote
+        background: 'white',
+    },
     appBar: {
+        background: '#143a4e',
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -56,12 +63,23 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
+    hoverButton:{
+        '&:hover': {
+            backgroundColor: '#f77376',
+        }
+    },
+    iconButton:{
+        color: "white"
+    },
     drawer: {
+        opacity: 0.75,
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
     },
     drawerOpen: {
+        background: '#64bab6',
+        color: "white",
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -69,6 +87,8 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     drawerClose: {
+        background: '#64bab6',
+        color: "white",
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -89,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(2),
+        padding: theme.spacing(2), overflow: "auto"
     },
 }));
 
@@ -121,6 +141,82 @@ export default function MiniDrawer() {
         }
     }, [loggedIn]);
 
+
+    const getAllColumns = () => {
+        return [
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
+            {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
+            {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
+            {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
+            {title: 'Staff Hours', field: 'staffHours', type: 'numeric'},
+            {title: 'Employee Number', field: 'employeeNumber', type: 'numeric'},
+            {title: 'Time Expenditure', field: 'timeExpenditure', type: 'numeric'},
+            {title: 'End Date', field: 'endDate', type: 'date'},
+            {title: 'Risk Expected Value', field: 'riskExpectedValue', type: 'numeric'},
+            {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never'},
+            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never'},
+            {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never'},
+            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never'},
+            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never'},
+            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never'},
+            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never'},
+            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never'},
+            // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
+        ];
+    }
+
+    const getInternalColumns = () => {
+        return [
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true},
+            {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
+            {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
+            {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
+            {title: 'Staff Hours', field: 'staffHours', type: 'numeric'},
+            {title: 'Employee Number', field: 'employeeNumber', type: 'numeric'},
+            {title: 'Time Expenditure', field: 'timeExpenditure', type: 'numeric'},
+            {title: 'End Date', field: 'endDate', type: 'date'},
+            {title: 'Risk Expected Value', field: 'riskExpectedValue', type: 'numeric'},
+            {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never', hidden: true},
+            // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
+        ];
+    }
+
+    const getExternalColumns = () => {
+        return [
+            {title: 'Project Name', field: 'projectName',  cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable:'never', cellStyle: { backgroundColor: '#edf7f7' }, headerStyle: { backgroundColor: '#dcefee'}},
+            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
+            {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
+            {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
+            {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
+            {title: 'Staff Hours', field: 'staffHours', type: 'numeric'},
+            {title: 'Employee Number', field: 'employeeNumber', type: 'numeric'},
+            {title: 'Time Expenditure', field: 'timeExpenditure', type: 'numeric'},
+            {title: 'End Date', field: 'endDate', type: 'date'},
+            {title: 'Risk Expected Value', field: 'riskExpectedValue', type: 'numeric'},
+            {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never', hidden: true},
+            // {title: 'Active', field: 'active', lookup: {true: 'yes', false: 'no'}},
+        ];
+    }
+
     const switchView = (param) => {
         console.log("switchView " + loggedIn);
         if (loggedIn === false) {
@@ -128,7 +224,11 @@ export default function MiniDrawer() {
         }
         switch (param) {
             case 'MainTable':
-                return <ProjectTable/>;
+                return <ProjectTable columns={getAllColumns()} showInfoDialog={true} title={"All"} showColumnB={true} editHidden={true} deleteHidden={true}/>;
+            case 'MainTableInternal':
+                return <ProjectTable columns={getInternalColumns()} showInfoDialog={false} title={"Internal"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
+            case 'MainTableExternal':
+                return <ProjectTable columns={getExternalColumns()} showInfoDialog={false} title={"External"} showColumnB={false} editHidden={false} deleteHidden={false}/>;
             case 'Upload':
                 return <DropZone/>;
             case 'Planning':
@@ -148,6 +248,18 @@ export default function MiniDrawer() {
             case 'Übersicht':
                 setView((prevState) => {
                     prevState.selectedView = 'MainTable';
+                    return {...prevState, prevState};
+                });
+                break
+            case 'Übersicht Intern':
+                setView((prevState) => {
+                    prevState.selectedView = 'MainTableInternal';
+                    return {...prevState, prevState};
+                });
+                break
+            case 'Übersicht Extern':
+                setView((prevState) => {
+                    prevState.selectedView = 'MainTableExternal';
                     return {...prevState, prevState};
                 });
                 break
@@ -177,28 +289,35 @@ export default function MiniDrawer() {
         }
     };
 
-    const switchRoles = (top) => {
+    const switchRoles = (pos) => {
         switch (role) {
             case 'Admin':
-                if (top === true) {
-                    return ['Übersicht', 'Upload'];
-                } else {
-                    return ['Planungsübersicht', 'Logout'];
+                if (pos === 1) {
+                    return ['Übersicht','Übersicht Intern','Übersicht Extern'];
+                } else if(pos === 2) {
+                    return ['Planungsübersicht', 'Upload'];
+                }else {
+                    return ['Logout'];
                 }
             case 'ProjectManager':
-                if (top === true) {
-                    return ['Übersicht'];
-                } else {
-                    return ['Planungsübersicht', 'Logout'];
+                if (pos === 1) {
+                    return ['Übersicht','Übersicht Intern','Übersicht Extern',];
+                }else if(pos === 2) {
+                    return ['Planungsübersicht'];
+                }else {
+                    return ['Logout'];
                 }
             case 'Controlling':
-                if (top === true) {
+                if (pos === 1) {
                     return ['Übersicht'];
-                } else {
+                }else if(pos === 2)
+                {
+                    return  [];
+                }else {
                     return ['Logout'];
                 }
             default:
-                if (top === true) {
+                if (pos === 1 || pos === 2) {
                     return [];
                 } else {
                     return ['Logout'];
@@ -210,6 +329,10 @@ export default function MiniDrawer() {
         switch (param) {
             case 'Übersicht':
                 return <NewIcon/>;
+            case 'Übersicht Intern':
+                return  <Business/>;
+            case 'Übersicht Extern':
+                return <Public/>;
             case 'Upload':
                 return <CloudUpload/>;
             case 'Planungsübersicht':
@@ -223,7 +346,7 @@ export default function MiniDrawer() {
 
     const displayLoggedInUser = () => {
         return (
-            <IconButton color="inherit">
+            <IconButton color="inherit" disableFocusRipple={true} disableRipple={true}>
                 <AccountBox/>
                 <Typography variant="caption" className={classes.title} noWrap>
                     {user.username + ", " + role}
@@ -236,7 +359,7 @@ export default function MiniDrawer() {
         <div className={classes.root}>
             <CssBaseline/>
             <AppBar
-                position="fixed"
+                position="absolute"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
@@ -278,26 +401,37 @@ export default function MiniDrawer() {
                     </IconButton>
                 </div>
                 <List>
-                    {switchRoles(true).map((text, index) => (
-                    <ListItem button key={text} onClick={() => {
+                    {switchRoles(1).map((text, index) => (
+                    <ListItem className={classes.hoverButton} button key={text} onClick={() => {
                         switchSetView(text)
                     }}>
-                        <ListItemIcon>{switchIcons(text)}</ListItemIcon>
-                        <ListItemText primary={text}/>
+                        <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
                     </ListItem>
                     ))}
                 </List>
-                <Divider/>
+                <Divider classes={{root: classes.divider}}/>
                 <List>
-                    {switchRoles(false).map((text, index) => (
-                        <ListItem button key={text} onClick={() => {
+                    {switchRoles(2).map((text, index) => (
+                        <ListItem className={classes.hoverButton} button key={text} onClick={() => {
+                            switchSetView(text)
+                        }}>
+                            <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
+                            <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider hidden={role === "Controlling"}  classes={{root: classes.divider}} />
+                <List>
+                    {switchRoles(3).map((text, index) => (
+                        <ListItem className={classes.hoverButton} button key={text} onClick={() => {
                             switchSetView(text)
                             if (text === 'Logout') {
                                 setLoggedIn(false);
                             }
                         }}>
-                            <ListItemIcon>{switchIcons(text)}</ListItemIcon>
-                            <ListItemText primary={text}/>
+                            <ListItemIcon className={classes.iconButton}>{switchIcons(text)}</ListItemIcon>
+                            <ListItemText primaryTypographyProps={{ style: {fontWeight: "bold"}}} primary={text}/>
                         </ListItem>
                     ))}
                 </List>

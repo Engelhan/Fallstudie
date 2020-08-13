@@ -10,7 +10,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(2),
-        float: "right"
+        float: "right",
+        '&:hover': {
+            backgroundColor: '#f77376',
+        }
     },
     buttonGroup: {
         width: '100%',
