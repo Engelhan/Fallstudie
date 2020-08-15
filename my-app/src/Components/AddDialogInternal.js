@@ -41,8 +41,6 @@ export default function AddDialogInternal(props) {
     const [projectMembers, setProjectMembers] = React.useState("");
     const [registrationDate, setRegistrationDate] = React.useState(new Date());
     const [goal, setGoal] = React.useState("");
-    //Customer
-    const [customerName, setCustomerName] = React.useState("1");
     const setToDefault = () => {
         setProjectName("");
         setEstimatedCosts(0);
@@ -57,7 +55,6 @@ export default function AddDialogInternal(props) {
         setProjectMembers("");
         setRegistrationDate(new Date());
         setGoal("");
-        setCustomerName("1")
     };
 
     const addNew = () => {
@@ -79,8 +76,7 @@ export default function AddDialogInternal(props) {
             projectLeader: projectLeader,
             projectMembers: projectMembers,
             registrationDate: registrationDate.toISOString(),
-            goal: goal,
-            customerName: customerName
+            goal: goal
         }
         props.addProject(newProject);
         props.handleClose();
@@ -179,30 +175,11 @@ export default function AddDialogInternal(props) {
                             </Grid>
                         </Grid>
                         <Grid style={{marginTop: 15}} container item xs={12} spacing={1}>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <Typography style={{fontWeight: "bold", marginTop: 25}}
                                             variant="subtitle2" noWrap>
                                     Transaction-Data and Customer-Data
                                 </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <FormControl fullWidth className={classes.formControl}>
-                                    <InputLabel htmlFor="age-native-simple">Customer</InputLabel>
-                                    <Select native onChange={(event) => {
-                                            setCustomerName(event.target.value);
-                                        }} value={customerName}
-                                        inputProps={{
-                                            name: 'Customer',
-                                            id: 'Customer-native-simple',
-                                        }} >
-                                        <option value={1}>Customer 1</option>
-                                        <option value={2}>Customer 2</option>
-                                        <option value={3}>Customer 3</option>
-                                        <option value={4}>Customer 4</option>
-                                        <option value={5}>Customer 5</option>
-                                        <option value={6}>Customer 6</option>
-                                    </Select>
-                                </FormControl>
                             </Grid>
                         </Grid>
                         <Grid container item xs={12} spacing={3}>

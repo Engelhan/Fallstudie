@@ -86,19 +86,20 @@ export default function PlanningProjects() {
         setArchivedProjects(projects);
     }
 
-    const archiveProjects = () => {
+    const archiveProjects = () => new Promise((resolve) => {
         archivedProjects.forEach(project => {
             project.archived = true;
             axios.post("https://localhost:5001/project/updateProjects",
                 project
             ).then((result) => {
                 console.log(result);
+                resolve();
             }).catch((error) => {
                 console.log(error);
+                resolve();
             });
         })
-        setMaxScore(0);
-    }
+    })
 
     useEffect(() => {
         if (maxScore === 0) {
@@ -133,7 +134,7 @@ export default function PlanningProjects() {
                          color="inherit">
                 <Button startIcon={progress <= 100 ? <Check/> : <Clear/>}
                         className={progress <= 100 ? classes.buttonGreen : classes.buttonRed}
-                        onClick={progress <= 100 ? archiveProjects : ""}
+                        onClick={progress <= 100 ? () => {archiveProjects().then(result => {setMaxScore(0)})} : null}
                     >Plannung abschließen</Button>
             </ButtonGroup>
         </div>

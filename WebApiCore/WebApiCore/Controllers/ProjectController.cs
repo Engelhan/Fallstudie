@@ -77,7 +77,7 @@ namespace WebApiCore.Controllers
             var projects = new List<Projects>();
             using (var context = new ProjectsContext())
             {
-                projects = context.Projects.Where(p => p.PlannedSales == 0).ToList();
+                projects = context.Projects.Where(p => p.PlannedSales == 0 && p.Archived == false).ToList();
             }
             return projects;
         }
@@ -88,7 +88,7 @@ namespace WebApiCore.Controllers
             var projects = new List<Projects>();
             using (var context = new ProjectsContext())
             {
-                projects = context.Projects.Where(p => p.PlannedSales != 0).ToList();
+                projects = context.Projects.Where(p => p.PlannedSales != 0 && p.Archived == false).ToList();
             }
             return projects;
         }
@@ -267,8 +267,22 @@ namespace WebApiCore.Controllers
                                         'employeeNumber':{'type':'number'},
                                         'timeExpenditure':{'type':'number'},
                                         'endDate':{'type':'string'},
-                                        'customerPriority':{'type':'number'}
+                                        'customerPriority':{'type':'number'},
                                         'riskExpectedValue':{'type':'number'},
+                                        'archived':{'type':'string'},
+                                        'projectLeader':{'type':'string'},
+                                        'projectMembers':{'type':'string'},
+                                        'registrationDate':{'type':'string'},
+                                        'goal':{'type':'string'},
+                                        'customerName':{'type':'string'},
+                                        'contactPerson':{'type':'string'},
+                                        'address':{'type':'string'},
+                                        'businessField':{'type':'string'},
+                                        'client':{'type':'string'},
+                                        'department':{'type':'string'},
+                                        'site':{'type':'string'},
+                                        'phoneNumber':{'type':'string'},
+                                        'eMail':{'type':'string'}
                                     },
                                     'additionalProperties':false,
                                     'required':[
@@ -283,7 +297,21 @@ namespace WebApiCore.Controllers
                                                 'timeExpenditure',
                                                 'endDate',
                                                 'customerPriority',
-                                                'riskExpectedValue'
+                                                'riskExpectedValue',
+                                                'archived',
+                                                'projectLeader',
+                                                'projectMembers',
+                                                'registrationDate',
+                                                'goal',
+                                                'customerName',
+                                                'contactPerson',
+                                                'address',
+                                                'businessField',
+                                                'client',
+                                                'department',
+                                                'site',
+                                                'phoneNumber',
+                                                'eMail'
                                                ],
                                 },
                               }";

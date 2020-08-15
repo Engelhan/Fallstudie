@@ -70,11 +70,13 @@ export default function ProjectTable(props) {
     const LoadProjects = () => {
         setLoading(true);
         var resultData = [];
-        var url = "https://localhost:5001/project/getProjects";
+        var url = "https://localhost:5001/project/getNonArchivedProjects";
         if (props.title === "Internal") {
             url = "https://localhost:5001/project/getInternalProjects";
         }else if(props.title === "External"){
             url = "https://localhost:5001/project/getExternalProjects";
+        }else if(props.title === "Archived"){
+        url = "https://localhost:5001/project/getArchivedProjects";
         }
         axios.get(url).then((result) => {
             console.log(result.data);
