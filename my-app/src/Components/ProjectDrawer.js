@@ -19,6 +19,8 @@ import ProjectTable from "./ProjectTable";
 import DropZone from "./DropZone";
 import PlanningProjects from "./Planning";
 import LoginForm from "./LoginForm";
+import Icon from '@material-ui/core/Icon';
+import YourLogo from '../Images/favicon1.png'
 
 import NewIcon from '@material-ui/icons/FiberNew';
 import CloudUpload from '@material-ui/icons/CloudUpload';
@@ -35,6 +37,13 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    bottomPush: {
+        position: "fixed",
+        bottom: 0,
+        paddingLeft: 16,
+        paddingBottom: 10,
+        display: 'inline-flex'
     },
     divider: {
         // Theme Color, or use css color in quote
@@ -59,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: 36,
     }, title: {
+        fontWeight: "bold",
+        paddingLeft: 20,
         flexGrow: 1,
     },
     hide: {
@@ -211,7 +222,13 @@ export default function MiniDrawer() {
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
-            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never', hidden: true},
+            {
+                title: 'Average Hourly Rate',
+                field: 'averageHourlyRate',
+                type: 'numeric',
+                editable: 'never',
+                hidden: true
+            },
             {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never', hidden: true},
@@ -249,7 +266,13 @@ export default function MiniDrawer() {
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
-            {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never', hidden: true},
+            {
+                title: 'Average Hourly Rate',
+                field: 'averageHourlyRate',
+                type: 'numeric',
+                editable: 'never',
+                hidden: true
+            },
             {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Time Buffer', field: 'timeBuffer', type: 'numeric', editable: 'never', hidden: true},
@@ -259,9 +282,21 @@ export default function MiniDrawer() {
 
     const getAarchivedColumns = () => {
         return [
-            {title: 'Project Name', field: 'projectName', cellStyle: {backgroundColor: '#edf7f7'}, headerStyle: {backgroundColor: '#dcefee'}},
-            {title: 'Ranking', field: 'ranking', defaultSort: "desc", type: 'numeric', editable: 'never', cellStyle: {backgroundColor: '#edf7f7'},
-                headerStyle: {backgroundColor: '#dcefee'}},
+            {
+                title: 'Project Name',
+                field: 'projectName',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
+            {
+                title: 'Ranking',
+                field: 'ranking',
+                defaultSort: "desc",
+                type: 'numeric',
+                editable: 'never',
+                cellStyle: {backgroundColor: '#edf7f7'},
+                headerStyle: {backgroundColor: '#dcefee'}
+            },
             {title: 'Accepted', field: 'archived', lookup: {true: 'yes', false: 'no'}},
             {title: 'Customer Name', field: 'customerName'},
             {title: 'End Date', field: 'endDate', type: 'date'},
@@ -499,6 +534,14 @@ export default function MiniDrawer() {
                         </ListItem>
                     ))}
                 </List>
+                <div className={classes.bottomPush}>
+                    <Icon style={{fill: "green"}}>
+                        <img src={YourLogo} height={24} width={40}/>
+                    </Icon>
+                    <Typography variant="subtitle2" className={classes.title} noWrap>
+                        {"Super Nova AG"}
+                    </Typography>
+                </div>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
