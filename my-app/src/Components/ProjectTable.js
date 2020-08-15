@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProjectTable(props) {
     const classes = useStyles();
+    const [loading, setLoading] = React.useState(false);
     const [openI, setOpenI] = React.useState(false);
     const [openE, setOpenE] = React.useState(false);
     const [openInfo, setOpenInfo] = React.useState(false);
@@ -67,6 +68,7 @@ export default function ProjectTable(props) {
     };
 
     const LoadProjects = () => {
+        setLoading(true);
         var resultData = [];
         var url = "https://localhost:5001/project/getProjects";
         if (props.title === "Internal") {
@@ -81,9 +83,11 @@ export default function ProjectTable(props) {
                     const data = result.data;
                     return {...prevState, data};
                 });
+                setLoading(false);
             }, 0);
         }).catch((error) => {
             console.log(error);
+            setLoading(false);
         });
         console.log(resultData);
         return resultData;
@@ -197,6 +201,7 @@ export default function ProjectTable(props) {
 
     return (<div>
             <MaterialTable
+                isLoading={loading}
                 title={props.title + " Projects"}
                 columns={props.columns}
                 data={state.data}
@@ -246,7 +251,7 @@ export default function ProjectTable(props) {
             />
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
-                {props.title === "All" ? null : <Button startIcon={<Add/>} className={classes.button}
+                {props.title === "All" || props.title === "Archived" ? null : <Button startIcon={<Add/>} className={classes.button}
                                                         onClick={handleClickOpen}>Add {props.title} Project
                 </Button>}
                 <Button startIcon={<ReloadIcon/>} className={classes.button}

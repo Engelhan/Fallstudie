@@ -126,3 +126,4 @@ C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.MvcApplicationPartsAssemblyInfo.cache
 D:\Projekte\Fallstudie\WebApiCore\WebApiCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Schema.dll
 C:\Users\Niklas\Documents\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csprojAssemblyReference.cache
+D:\Projekte\Fallstudie\WebApiCore\WebApiCore\obj\Debug\netcoreapp3.1\WebApiCore.csprojAssemblyReference.cache

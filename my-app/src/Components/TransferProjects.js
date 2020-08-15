@@ -162,7 +162,7 @@ export default function TransferProjects(props) {
                                         Name: '{item.projectName}'  Ranking: {item.ranking}
                                     </Typography>
                                     <Typography  align="center" type="body2" style={{color: '#64bab6'}}>
-                                        Staff Hours: {item.staffHours}
+                                       Type '{item.plannedSales > 0 ? "External" : "Internal"}'  Staff Hours: {item.staffHours}
                                     </Typography>
                                 </div>
                             }

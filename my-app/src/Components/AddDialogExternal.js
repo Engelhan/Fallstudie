@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 
 const useStyles = makeStyles((theme) => ({
-    hover:{
+    hover: {
         '&:hover': {
             color: "white",
             backgroundColor: '#f77376',
@@ -27,8 +27,9 @@ export default function AddDialogInternal(props) {
     const classes = useStyles();
     //KPIs
     const [emptyName, setEmptyName] = React.useState(false);
+    const [plannedSalesToSmall, setPlannedSalesToSmall] = React.useState(false);
     const [projectName, setProjectName] = React.useState("");
-    const [plannedSales, setPlannedSales] = React.useState(0);
+    const [plannedSales, setPlannedSales] = React.useState(1);
     const [estimatedCosts, setEstimatedCosts] = React.useState(0);
     const [staffCosts, setStaffCosts] = React.useState(0);
     const [staffHours, setStaffHours] = React.useState(0);
@@ -46,7 +47,7 @@ export default function AddDialogInternal(props) {
     const [customerName, setCustomerName] = React.useState("1");
     const setToDefault = () => {
         setProjectName("");
-        setPlannedSales(0);
+        setPlannedSales(1);
         setEstimatedCosts(0);
         setStaffCosts(0);
         setStaffHours(0);
@@ -65,6 +66,10 @@ export default function AddDialogInternal(props) {
     const addNew = () => {
         if (projectName === "") {
             setEmptyName(true);
+            return;
+        }
+        if (plannedSales === null || plannedSales <= 0) {
+            setPlannedSalesToSmall(true);
             return;
         }
         var newProject = {
@@ -89,6 +94,7 @@ export default function AddDialogInternal(props) {
         props.handleClose();
         setToDefault();
         setEmptyName(false);
+        setPlannedSalesToSmall(false);
     };
 
     Date.prototype.toDateInputValue = (function () {
@@ -103,6 +109,7 @@ export default function AddDialogInternal(props) {
                 props.handleClose();
                 setToDefault();
                 setEmptyName(false);
+                setPlannedSalesToSmall(false);
             }} aria-labelledby="form-dialog-title">
                 <DialogTitle style={{fontWeight: "bold"}} id="form-dialog-title">New external Project</DialogTitle>
                 <DialogContent style={{overflow: "hidden", height: "100%", width: "100%"}}>
@@ -119,13 +126,15 @@ export default function AddDialogInternal(props) {
                                 <TextField onChange={(event) => {
                                     setProjectName(event.target.value);
                                 }} value={projectName} margin="dense" id="ProjectName"
-                                           helperText={emptyName === true ? "Muss gefüllt sein!" : ""} error={emptyName}
+                                           helperText={emptyName === true ? "Has  to be Filled!" : ""} error={emptyName}
                                            label="ProjectName" type="text" fullWidth/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField onChange={(event,) => {
                                     setPlannedSales(parseInt(event.target.value));
                                 }} value={plannedSales} margin="dense" id="PlannedSales"
+                                           helperText={plannedSalesToSmall === true ? "Values < 0 are invalid!" : ""}
+                                           error={plannedSalesToSmall}
                                            label="PlannedSales" type="number" fullWidth/>
                             </Grid>
                         </Grid>
@@ -198,12 +207,12 @@ export default function AddDialogInternal(props) {
                                 <FormControl fullWidth className={classes.formControl}>
                                     <InputLabel htmlFor="age-native-simple">Customer</InputLabel>
                                     <Select native onChange={(event) => {
-                                            setCustomerName(event.target.value);
-                                        }} value={customerName}
-                                        inputProps={{
-                                            name: 'Customer',
-                                            id: 'Customer-native-simple',
-                                        }} >
+                                        setCustomerName(event.target.value);
+                                    }} value={customerName}
+                                            inputProps={{
+                                                name: 'Customer',
+                                                id: 'Customer-native-simple',
+                                            }}>
                                         <option value={1}>Customer 1</option>
                                         <option value={2}>Customer 2</option>
                                         <option value={3}>Customer 3</option>
@@ -222,11 +231,12 @@ export default function AddDialogInternal(props) {
                                            label="ProjectLeader" type="text" fullWidth/>
                             </Grid>
                             <Grid item xs={6}>
-                                <Tooltip title="Seperator: , (Example Data: John Wick, Peter Packer)" enterDelay={500} leaveDelay={200}>
-                                <TextField onChange={(event) => {
-                                    setProjectMembers(event.target.value);
-                                }} value={projectMembers} margin="dense" id="ProjectMembers"
-                                           label="ProjectMembers" type="text" fullWidth/>
+                                <Tooltip title="Seperator: , (Example Data: John Wick, Peter Packer)" enterDelay={500}
+                                         leaveDelay={200}>
+                                    <TextField onChange={(event) => {
+                                        setProjectMembers(event.target.value);
+                                    }} value={projectMembers} margin="dense" id="ProjectMembers"
+                                               label="ProjectMembers" type="text" fullWidth/>
                                 </Tooltip>
                             </Grid>
                         </Grid>
@@ -241,10 +251,10 @@ export default function AddDialogInternal(props) {
                                            InputLabelProps={{shrink: true}}/>
                             </Grid>
                             <Grid item xs={6}>
-                                    <TextField onChange={(event) => {
-                                        setGoal(event.target.value);
-                                    }} value={goal} margin="dense" id="Goal"
-                                               label="Goal" type="text" fullWidth/>
+                                <TextField onChange={(event) => {
+                                    setGoal(event.target.value);
+                                }} value={goal} margin="dense" id="Goal"
+                                           label="Goal" type="text" fullWidth/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -257,7 +267,8 @@ export default function AddDialogInternal(props) {
                         props.handleClose();
                         setToDefault();
                         setEmptyName(false);
-                    }} >
+                        setPlannedSalesToSmall(false);
+                    }}>
                         Cancel
                     </Button>
                 </DialogActions>
