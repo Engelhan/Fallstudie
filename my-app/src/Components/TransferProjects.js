@@ -76,6 +76,7 @@ export default function TransferProjects(props) {
         props.setProgressbarNormalised(valueForProgress);
         setRight(right.concat(left));
         setLeft([]);
+        props.setProjectsArchived(right.concat(left));
     };
 
     const handleCheckedRight = () => {
@@ -89,6 +90,7 @@ export default function TransferProjects(props) {
         setRight(right.concat(leftChecked));
         setLeft(not(left, leftChecked));
         setChecked(not(checked, leftChecked));
+        props.setProjectsArchived(right.concat(leftChecked));
     };
 
     const handleCheckedLeft = () => {
@@ -103,17 +105,19 @@ export default function TransferProjects(props) {
         setLeft(left.concat(rightChecked));
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
+        props.setProjectsArchived(not(right, rightChecked));
     };
 
     const handleAllLeft = () => {
         props.reset();
         setLeft(left.concat(right));
         setRight([]);
+        props.setProjectsArchived([]);
     };
 
     const LoadProjects = () => {
         var resultData = [];
-        axios.get("https://localhost:5001/project/getProjects"
+        axios.get("https://localhost:5001/project/getNonArchivedProjects"
         ).then((result) => {
             var res = [];
             console.log(result);

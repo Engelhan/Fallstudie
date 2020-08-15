@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Check from "@material-ui/icons/Check";
 import Clear from "@material-ui/icons/Clear";
 import {Grid, TextField} from "@material-ui/core";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     buttonGreen: {
@@ -68,6 +69,7 @@ export default function PlanningProjects() {
     const [progress, setProgress] = React.useState(0);
     const [maxScore, setMaxScore] = React.useState();
     const [scoreFilled, setScoreFilled] = React.useState(false);
+    const [archivedProjects, setArchivedProjects] = React.useState([]);
 
     //MIN = Minimum expected value
     //MAX = Maximium expected value
@@ -78,6 +80,24 @@ export default function PlanningProjects() {
         var res = progress + normalise(val);
         setProgress(() => (res));
         console.log(progress);
+    }
+
+    const setProjectArchived = (projects) => {
+        setArchivedProjects(projects);
+    }
+
+    const archiveProjects = () => {
+        archivedProjects.forEach(project => {
+            project.archived = true;
+            axios.post("https://localhost:5001/project/updateProjects",
+                project
+            ).then((result) => {
+                console.log(result);
+            }).catch((error) => {
+                console.log(error);
+            });
+        })
+        setMaxScore(0);
     }
 
     useEffect(() => {
@@ -103,7 +123,7 @@ export default function PlanningProjects() {
                     setProgress(() => (0));
                 }} id="maxScore" label="Available Staff Hours" type="number" autoFocus required/>
             </Box>
-            <TransferProjects scoreFilled={scoreFilled} key={maxScore} reset={() => {
+            <TransferProjects scoreFilled={scoreFilled} setProjectsArchived={setProjectArchived} key={maxScore} reset={() => {
                 setProgress(() => (0));
             }} setProgressbarNormalised={setProgressbarNormalised}/>
             <LinearProgressWithLabel value={progress}
@@ -112,8 +132,9 @@ export default function PlanningProjects() {
             <ButtonGroup className={classes.buttonGroup} disableElevation variant="outlined" size="small"
                          color="inherit">
                 <Button startIcon={progress <= 100 ? <Check/> : <Clear/>}
-                        className={progress <= 100 ? classes.buttonGreen : classes.buttonRed}>Plannung
-                    abschließen</Button>
+                        className={progress <= 100 ? classes.buttonGreen : classes.buttonRed}
+                        onClick={progress <= 100 ? archiveProjects : ""}
+                    >Plannung abschließen</Button>
             </ButtonGroup>
         </div>
     );

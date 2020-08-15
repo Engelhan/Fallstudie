@@ -49,6 +49,28 @@ namespace WebApiCore.Controllers
             return projects;
         }
 
+        [HttpGet("getArchivedProjects")]
+        public IEnumerable<Projects> GetArchivedProjects()
+        {
+            var projects = new List<Projects>();
+            using (var context = new ProjectsContext())
+            {
+                projects = context.Projects.Where(p => p.Archived == true).ToList();
+            }
+            return projects;
+        }
+
+        [HttpGet("getNonArchivedProjects")]
+        public IEnumerable<Projects> GetNonArchivedProjects()
+        {
+            var projects = new List<Projects>();
+            using (var context = new ProjectsContext())
+            {
+                projects = context.Projects.Where(p => p.Archived == false).ToList();
+            }
+            return projects;
+        }
+
         [HttpGet("getInternalProjects")]
         public IEnumerable<Projects> GetInternalProjects()
         {
@@ -75,6 +97,33 @@ namespace WebApiCore.Controllers
         [HttpPost("addProjects/")]
         public IEnumerable<Projects> AddProject(Projects projects)
         {
+            if (projects.CustomerName == "1")
+            {
+                projects.CustomerName = "SICK AG";
+                projects.ContactPerson = "Max Müller";
+                projects.Address = "Beispielstraße 10";
+                projects.BusinessField = "Sensortechnik";
+                projects.PhoneNumber = "+4915158654";
+                projects.EMail = "MaxMueller@sick.de";
+            }
+            else if (projects.CustomerName == "2")
+            {
+                projects.CustomerName = "Allgeier ES";
+                projects.ContactPerson = "Sara mack";
+                projects.Address = "Beispielstraße 11";
+                projects.BusinessField = "SAP Support";
+                projects.PhoneNumber = "+49171555654";
+                projects.EMail = "Saramack@allgeier.de";
+            }
+            else if (projects.CustomerName == "3")
+            {
+                projects.CustomerName = "Hekatron Manufacturing";
+                projects.ContactPerson = "Niklas Engelhardt";
+                projects.Address = "Beispielstraße 12";
+                projects.BusinessField = "EMS";
+                projects.PhoneNumber = "+4915186151552";
+                projects.EMail = "NiklasEngelhardt@hekatron.de";
+            }
             projects.ProjectId = 0;
             calculateKPI(projects);
             using (var context = new ProjectsContext())
@@ -89,6 +138,7 @@ namespace WebApiCore.Controllers
         [HttpPost("updateProjects/")]
         public IEnumerable<Projects> updateProject(Projects projects)
         {
+            
             calculateKPI(projects);
             using (var context = new ProjectsContext())
             {
@@ -113,7 +163,6 @@ namespace WebApiCore.Controllers
 
         public void calculateKPI(Projects projects)
         {
-            var financeKPI = 0;
             var employeeKPI = 0;
             if (projects.StaffHours != 0)
             {
@@ -127,9 +176,10 @@ namespace WebApiCore.Controllers
             }
             projects.ProfitPerHour = projects.EmployeeSales - projects.AverageHourlyRate;
             projects.TimeBuffer = (projects.EndDate - DateTime.Now.AddDays(projects.TimeExpenditure)).Days;
+            int financeKPI;
             if (projects.PlannedSales == 0)
             {
-                if(projects.CostSavings != 0)
+                if (projects.CostSavings != 0)
                 {
                     projects.PaybackPeriod = projects.EstimatedCosts / projects.CostSavings;
                     financeKPI = ((1 / projects.PaybackPeriod) * 200) * 5 * 4;
@@ -142,7 +192,7 @@ namespace WebApiCore.Controllers
             }
             else
             {
-                
+
                 projects.PlannedProfit = projects.PlannedSales - projects.EstimatedCosts;
                 if (projects.PlannedSales != 0)
                 {
