@@ -171,7 +171,7 @@ export default function MiniDrawer() {
                 cellStyle: {backgroundColor: '#edf7f7'},
                 headerStyle: {backgroundColor: '#dcefee'}
             },
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
+            {title: 'Planned Revenue', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -183,7 +183,7 @@ export default function MiniDrawer() {
             {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never'},
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never'},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never'},
-            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never'},
+            {title: 'Employee Revenue', field: 'employeeSales', type: 'numeric', editable: 'never'},
             {title: 'Average Hourly Rate', field: 'averageHourlyRate', type: 'numeric', editable: 'never'},
             {title: 'Profit Per Hour', field: 'profitPerHour', type: 'numeric', editable: 'never'},
             {title: 'Customer Priority', field: 'customerPriority', type: 'numeric', editable: 'never'},
@@ -209,7 +209,7 @@ export default function MiniDrawer() {
                 cellStyle: {backgroundColor: '#edf7f7'},
                 headerStyle: {backgroundColor: '#dcefee'}
             },
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric', hidden: true},
+            {title: 'Planned Revenue', field: 'plannedSales', type: 'numeric', hidden: true},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -221,7 +221,7 @@ export default function MiniDrawer() {
             {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
-            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Employee Revenue', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
             {
                 title: 'Average Hourly Rate',
                 field: 'averageHourlyRate',
@@ -253,7 +253,7 @@ export default function MiniDrawer() {
                 cellStyle: {backgroundColor: '#edf7f7'},
                 headerStyle: {backgroundColor: '#dcefee'}
             },
-            {title: 'Planned Sales', field: 'plannedSales', type: 'numeric'},
+            {title: 'Planned Revenue', field: 'plannedSales', type: 'numeric'},
             {title: 'Estimated Costs', field: 'estimatedCosts', type: 'numeric'},
             {title: 'Cost Savings', field: 'costSavings', type: 'numeric'},
             {title: 'Staff Costs', field: 'staffCosts', type: 'numeric'},
@@ -265,7 +265,7 @@ export default function MiniDrawer() {
             {title: 'Planned Profit', field: 'plannedProfit', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Payback Period', field: 'paybackPeriod', type: 'numeric', editable: 'never', hidden: true},
             {title: 'Rentability', field: 'rentability', type: 'numeric', editable: 'never', hidden: true},
-            {title: 'Employee Sales', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
+            {title: 'Employee Revenue', field: 'employeeSales', type: 'numeric', editable: 'never', hidden: true},
             {
                 title: 'Average Hourly Rate',
                 field: 'averageHourlyRate',

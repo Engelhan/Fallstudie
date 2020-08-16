@@ -257,7 +257,7 @@ export default function ProjectTable(props) {
                                                         onClick={handleClickOpen}>Add {props.title} Project
                 </Button>}
                 <Button startIcon={<ReloadIcon/>} className={classes.button}
-                        onClick={LoadProjects}>Aktualisieren</Button>
+                        onClick={LoadProjects}>Reload</Button>
             </ButtonGroup>
             <AddDialogInternal open={openI} handleClose={handleClose} addProject={addProject}/>
             <AddDialogExternal open={openE} handleClose={handleClose} addProject={addProject}/>
